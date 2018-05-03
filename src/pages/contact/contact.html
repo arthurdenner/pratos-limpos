@@ -1,17 +1,15 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Contact
+      Configurações
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+  <ion-content *ngIf="userId">
+    <button (click)="signout()" ion-button color="danger">
+      Sair
+    </button>
+  </ion-content>
 </ion-content>
