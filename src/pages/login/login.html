@@ -14,5 +14,18 @@
 
 
 <ion-content padding>
+  <ion-item>
+    <ion-label color="primary" stacked>E-mail</ion-label>
+    <ion-input [(ngModel)]="email"></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label color="primary" stacked>Senha</ion-label>
+    <ion-input [(ngModel)]="password" type="password"></ion-input>
+  </ion-item>
+
+  <ion-content padding>
+    <button (click)="signup()" ion-button color="light">Criar conta</button>
+    <button (click)="login()" ion-button color="secondary">Entrar</button>
+  </ion-content>
 </ion-content>

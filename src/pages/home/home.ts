@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { LoginPage } from '../login/login';
+// import { LoginPage } from '../login/login';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';
 import get from 'lodash/fp/get';
@@ -23,10 +23,11 @@ export class HomePage {
   ) {}
 
   ionViewDidEnter() {
-    const uid = get('auth.currentUser.uid', this.firebaseAuth);
+    const userId = get('auth.currentUser.uid', this.firebaseAuth);
+    console.log(userId);
 
-    if (!uid) {
-      this.navCtrl.setRoot(LoginPage);
+    if (!userId) {
+      console.log('Go to LoginPage');
     }
   }
 }
