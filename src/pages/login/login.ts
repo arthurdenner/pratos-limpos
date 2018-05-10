@@ -34,7 +34,7 @@ export class LoginPage {
     public storage: Storage
   ) {}
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     this.storage
       .get(APP_KEY)
       .then(storageData => {
