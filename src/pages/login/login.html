@@ -24,12 +24,12 @@
     <ion-input [(ngModel)]="password" type="password"></ion-input>
   </ion-item>
 
-  <ion-content padding>
+  <div class="buttons">
     <button (click)="signup()" ion-button color="light" block>Criar conta</button>
     <button (click)="login()" ion-button block>Entrar</button>
     <button (click)="loginWithGoogle()" ion-button icon-left color="danger" block>
       <ion-icon name="logo-google"></ion-icon>
       Google
     </button>
-  </ion-content>
+  </div>
 </ion-content>
