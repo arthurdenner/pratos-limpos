@@ -5,7 +5,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 // import { LoginPage } from '../login/login';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';
-import get from 'lodash/fp/get';
 
 @Component({
   selector: 'page-home',
@@ -21,13 +20,4 @@ export class HomePage {
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase
   ) {}
-
-  ionViewDidEnter() {
-    const userId = get('auth.currentUser.uid', this.firebaseAuth);
-    console.log(userId);
-
-    if (!userId) {
-      console.log('Go to LoginPage');
-    }
-  }
 }
