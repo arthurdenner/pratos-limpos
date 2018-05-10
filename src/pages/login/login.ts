@@ -33,16 +33,16 @@ export class LoginPage {
     public storage: Storage
   ) {}
 
-  ionViewWillEnter() {
-    this.storage.get(APP_KEY).then(storageData => {
-      if (!isEmpty(storageData)) {
-        this.navCtrl.setRoot(HomePage);
-      }
-    }).catch(err => {
-      console.error(err);
-      alert('An error occured reading from the storage!');
-    })
-  }
+  // ionViewWillEnter() {
+  //   this.storage.get(APP_KEY).then(storageData => {
+  //     if (!isEmpty(storageData)) {
+  //       this.navCtrl.setRoot(HomePage);
+  //     }
+  //   }).catch(err => {
+  //     console.error(err);
+  //     alert('An error occured reading from the storage!');
+  //   })
+  // }
 
   signup() {
     this.firebaseAuth.auth
@@ -88,5 +88,9 @@ export class LoginPage {
         console.error(err);
         alert('An error occured!');
       });
+  }
+
+  loginWithGoogle() {
+    console.log('Login with Google!')
   }
 }
