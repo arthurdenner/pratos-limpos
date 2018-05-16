@@ -9,6 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { TabsService } from '../services/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -41,6 +42,7 @@ import firebaseConfig from './firebase-config';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AngularFireAuth,
     AngularFireDatabase,
+    TabsService,
   ],
 })
 export class AppModule {}
