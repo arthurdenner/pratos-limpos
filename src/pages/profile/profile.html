@@ -1,18 +1,18 @@
-<!--
-  Generated template for the ProfilePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Profile</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
+  <ion-item>
+    <ion-avatar item-start>
+      <img class="profile-avatar" src="{{usuario.photoURL || 'http://4.bp.blogspot.com/-PDqvxCC-8wQ/UPnM3-TWJeI/AAAAAAAAAkc/7J9-SYbKyzQ/s1600/capture-20130118-192904.png'}}">
+    </ion-avatar>
+    <h2>{{ usuario.displayName || 'Nome do usuário' }}</h2>
+    <p>{{ usuario.email || 'E-mail do usuário'}}</p>
+  </ion-item>
+  <ion-item class="profile-clickable" (click)="selectSchool()">
+    Sua escola:
+    <p *ngIf="usuario.school">{{usuario.school}}</p>
+    <p *ngIf="!usuario.school">Não há escola cadastrada</p>
+  </ion-item>
+  <ion-item class="profile-clickable" (click)="signOut()">
+    Sair
+  </ion-item>
 
 </ion-content>

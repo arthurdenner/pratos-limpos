@@ -26,7 +26,6 @@ export class HomePage {
       .then(storageData => {
         if (isEmpty(storageData)) {
           this.navCtrl.setRoot(LoginPage);
-          return;
         }
       })
       .catch(err => {

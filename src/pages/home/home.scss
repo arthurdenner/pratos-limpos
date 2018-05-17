@@ -1,6 +1,8 @@
-.home-content > .scroll-content {
-  display: flex;
-  flex-direction: column;
+page-home {
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .home-container {
@@ -11,7 +13,7 @@
 
 .home-data-hoje {
   text-align: center;
-  font-size: 2em;
+  font-size: 1.5em;
   text-transform: uppercase;
 }
 
