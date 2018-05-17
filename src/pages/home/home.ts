@@ -3,12 +3,11 @@ import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-// import { LoginPage } from '../login/login';
+import isEmpty from 'lodash/fp/isEmpty';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
-
-const APP_KEY = '--pratos--limpos';
+import { APP_KEY } from '../../app/constants';
 
 @Component({
   selector: 'page-home',
@@ -19,25 +18,26 @@ export class HomePage {
     locale: pt,
   });
 
-  constructor(
-    public navCtrl: NavController,
-    public firebaseAuth: AngularFireAuth,
-    public db: AngularFireDatabase,
-    public storage: Storage
-  ) {}
+  constructor(public navCtrl: NavController, public storage: Storage) {}
 
-  signOut() {
-    this.firebaseAuth.auth.signOut().then(() => {
-      this.storage
-        .set(APP_KEY, {})
-        .then(() => {
-          console.log('Signed out successfully!');
+  ionViewDidLoad() {
+    this.storage
+      .get(APP_KEY)
+      .then(storageData => {
+        if (isEmpty(storageData)) {
           this.navCtrl.setRoot(LoginPage);
-        })
-        .catch(err => {
-          console.error(err);
-          alert('An error occured trying to login!');
-        });
-    });
+          return;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('An error occured reading from the storage!');
+      });
+
+    console.log('TODO: Buscar avaliação do dia!');
+  }
+
+  makeEvaluation() {
+    alert('Realizar avaliação');
   }
 }

@@ -1,16 +1,13 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{currentDate}}</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content padding class="home-content">
+  <p class="home-data-hoje">
+    {{currentDate}}
+  </p>
 
-<div padding class="home-container">
-  <div style="flex: 1">
-    <h5>Você ainda não fez a avaliação de hoje</h5>
+  <div class="home-container">
+    <div class="home-avaliacao">
+      <h5>Você ainda não fez a avaliação de hoje</h5>
 
-    <!-- <button ion-button block>Realizar</button> -->
+      <button ion-button (click)="makeEvaluation()">Realizar</button>
+    </div>
   </div>
-
-
-  <button (click)="signOut()" ion-button color="danger" block>Sair</button>
-</div>
+</ion-content>

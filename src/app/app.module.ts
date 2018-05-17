@@ -20,7 +20,14 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import firebaseConfig from './firebase-config';
 
 @NgModule({
-  declarations: [MyApp, AboutPage, ContactPage, HomePage, TabsPage, LoginPage],
+  declarations: [
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    LoginPage,
+    TabsPage,
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -33,8 +40,8 @@ import firebaseConfig from './firebase-config';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage,
     LoginPage,
+    TabsPage,
   ],
   providers: [
     StatusBar,

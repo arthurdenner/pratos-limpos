@@ -6,16 +6,9 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import isEmpty from 'lodash/fp/isEmpty';
 import pick from 'lodash/fp/pick';
+import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
-
-const APP_KEY = '--pratos--limpos';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { APP_KEY } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -31,14 +24,18 @@ export class LoginPage {
     public navParams: NavParams,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
-    public storage: Storage
+    public storage: Storage,
+    private tabs: TabsService
   ) {}
 
   ionViewDidLoad() {
+    this.tabs.hide();
+
     this.storage
       .get(APP_KEY)
       .then(storageData => {
         if (!isEmpty(storageData)) {
+          this.tabs.show();
           this.navCtrl.setRoot(HomePage);
         }
       })
@@ -82,6 +79,7 @@ export class LoginPage {
           .set(APP_KEY, userData)
           .then(() => {
             console.log('Logged in successfully!');
+            this.tabs.show();
             this.navCtrl.setRoot(HomePage);
           })
           .catch(err => {
@@ -116,6 +114,7 @@ export class LoginPage {
             .set(APP_KEY, userData)
             .then(() => {
               console.log('Logged in successfully!');
+              this.tabs.show();
               this.navCtrl.setRoot(HomePage);
             })
             .catch(err => {
