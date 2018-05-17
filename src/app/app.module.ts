@@ -4,10 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
+import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
+import { ProfilePage } from '../pages/profile/profile';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TabsService } from '../services/tabs';
 
@@ -22,10 +22,10 @@ import firebaseConfig from './firebase-config';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    HistoryPage,
     HomePage,
     LoginPage,
+    ProfilePage,
     TabsPage,
   ],
   imports: [
@@ -37,10 +37,10 @@ import firebaseConfig from './firebase-config';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    HistoryPage,
     HomePage,
     LoginPage,
+    ProfilePage,
     TabsPage,
   ],
   providers: [
