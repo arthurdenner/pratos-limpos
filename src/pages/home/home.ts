@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';

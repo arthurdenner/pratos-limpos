@@ -8,8 +8,8 @@ import isEmpty from 'lodash/fp/isEmpty';
   templateUrl: 'history.html',
 })
 export class HistoryPage {
-  private hasAvaliacoes = false;
-  private avaliacoes = [];
+  public hasAvaliacoes = false;
+  public avaliacoes = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
