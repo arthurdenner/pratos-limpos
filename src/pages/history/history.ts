@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the HistoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import isEmpty from 'lodash/fp/isEmpty';
 
 @IonicPage()
 @Component({
@@ -14,12 +8,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'history.html',
 })
 export class HistoryPage {
+  private hasAvaliacoes = false;
+  private avaliacoes = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HistoryPage');
-  }
+    console.log('TODO: Buscar avaliações anteriores');
 
+    this.hasAvaliacoes = !isEmpty(this.avaliacoes);
+  }
 }
