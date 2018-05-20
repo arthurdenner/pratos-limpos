@@ -1,0 +1,23 @@
+{
+  "name": "pratos-limpos-server",
+  "version": "0.0.0",
+  "description": "Node.js server to the Pratos Limpos app",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon -w src/",
+    "start": "node src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arthur Denner <arthurdenner7@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "csvtojson": "^1.1.12",
+    "express": "^4.16.3",
+    "node-fetch": "^2.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  }
+}
