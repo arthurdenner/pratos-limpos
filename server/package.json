@@ -15,10 +15,10 @@
     "cors": "^2.8.4",
     "csvtojson": "^1.1.12",
     "express": "^4.16.3",
-    "firebase-admin": "^5.12.1",
-    "node-fetch": "^2.1.2"
+    "firebase-admin": "^5.12.1"
   },
   "devDependencies": {
+    "@firebase/app-types": "^0.3.1",
     "nodemon": "^1.17.4"
   }
 }

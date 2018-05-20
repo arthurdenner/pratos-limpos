@@ -4,11 +4,34 @@ const firebase = require('../config/firebase');
 const filterSchools = require('../utils/filter-schools');
 const normalizeSchools = require('../utils/normalize-schools');
 
+const getSchoolsByName = async (req, res) => {
+  const queryParams = req.query;
+
+  if (!queryParams.name) {
+    return res.status(406).send({
+      message: 'Pesquise por um nome!',
+    });
+  }
+
+  const schoolsRef = firebase
+    .database()
+    .ref('/schools')
+    .orderByChild('name');
+  const schoolsSnapshot = (await (await schoolsRef.once('value')).val()) || {};
+  const currentSchools = Object.values(schoolsSnapshot);
+
+  const filtered = currentSchools.filter(school =>
+    school.name.toLowerCase().includes(queryParams.name)
+  );
+
+  return res.status(200).send(filtered);
+};
+
 const updateSchools = async (req, res) => {
   const csvURL = req.body.csv;
   let schools = [];
 
-  const schoolsRef = await firebase.database().ref('/schools');
+  const schoolsRef = firebase.database().ref('/schools');
   const schoolsSnapshot = (await (await schoolsRef.once('value')).val()) || {};
   const currentSchools = Object.values(schoolsSnapshot);
 
@@ -33,5 +56,6 @@ const updateSchools = async (req, res) => {
 };
 
 module.exports = {
+  getSchoolsByName,
   updateSchools,
 };
