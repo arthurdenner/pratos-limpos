@@ -1,4 +1,4 @@
-const omitKeys = (keysToDelete, obj) => {
+const omitKeys = (keysToDelete = [], obj = {}) => {
   const newObject = obj;
 
   keysToDelete.forEach(key => delete newObject[key]);
@@ -6,7 +6,7 @@ const omitKeys = (keysToDelete, obj) => {
   return newObject;
 };
 
-const renameKeys = (newKeys, obj) => {
+const renameKeys = (newKeys = {}, obj = {}) => {
   const keyValues = Object.keys(obj).map(key => {
     const newKey = newKeys[key] || key;
 
@@ -17,13 +17,13 @@ const renameKeys = (newKeys, obj) => {
 };
 
 const newKeys = {
-  'properties/Nome': 'nome',
-  'properties/Município': 'municipio',
-  'properties/Endereço': 'endereco',
+  'properties/Nome': 'name',
+  'properties/Município': 'city',
+  'properties/Endereço': 'address',
   'properties/Cep': 'cep',
-  'properties/Telefone': 'telefone',
-  'properties/Etapas': 'etapas',
-  'properties/Código': 'codigo',
+  'properties/Telefone': 'telephone',
+  'properties/Etapas': 'type',
+  'properties/Código': 'code',
 };
 
 const keysToDelete = [
@@ -34,7 +34,7 @@ const keysToDelete = [
   'geometry/coordinates/2',
 ];
 
-const normalizedSchools = schools =>
+const normalizedSchools = (schools = []) =>
   schools.map(item => renameKeys(newKeys, omitKeys(keysToDelete, item)));
 
 module.exports = normalizedSchools;
