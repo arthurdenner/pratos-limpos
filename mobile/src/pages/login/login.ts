@@ -59,13 +59,11 @@ export class LoginPage {
             this.login();
           })
           .catch(err => {
-            console.error(err);
-            alert('An error occured trying to signup!');
+            alert(err.message);
           });
       })
       .catch(err => {
-        console.error(err);
-        alert('An error occured!');
+        alert(err.message);
       });
   }
 
@@ -83,15 +81,13 @@ export class LoginPage {
             this.navCtrl.setRoot(HomePage);
           })
           .catch(err => {
-            console.error(err);
-            alert('An error occured trying to login!');
+            alert(err.message);
           });
       })
       .catch(err => {
-        console.error(err);
-        alert('An error occured!');
+        alert(err.message);
       });
-  }
+    }
 
   loginWithGoogle() {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -118,14 +114,12 @@ export class LoginPage {
               this.navCtrl.setRoot(HomePage);
             })
             .catch(err => {
-              console.error(err);
-              alert('An error occured trying to login with Google!');
+              alert(err.message);
             });
         });
       })
       .catch(err => {
-        console.error(err);
-        alert('An error occured!');
+        alert(err.message);
       });
   }
 }
