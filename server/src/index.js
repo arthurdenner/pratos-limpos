@@ -11,6 +11,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => res.send('API Pratos Limpos'));
 app.get('/search-schools', schoolsController.getSchoolsByName);
 app.post('/update-schools', schoolsController.updateSchools);
 
