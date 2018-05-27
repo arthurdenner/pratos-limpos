@@ -4,7 +4,7 @@
   "description": "Node.js server to the Pratos Limpos app",
   "main": "src/index.js",
   "scripts": {
-    "deploy": "now --name api-pratos-limpos",
+    "deploy": "now --public --name api-pratos-limpos",
     "dev": "nodemon -w src/",
     "start": "node src",
     "test": "echo \"Error: no test specified\" && exit 1"
