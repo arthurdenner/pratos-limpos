@@ -4,16 +4,12 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content padding>
+  <div>
+    <ion-img class="logo" src="../../assets/imgs/lunch.svg"></ion-img>
+    <p class="logo-name">Pratos Limpos</p>
+  </div>
+
   <ion-item>
     <ion-label color="primary" stacked>E-mail</ion-label>
     <ion-input [(ngModel)]="email"></ion-input>
@@ -25,8 +21,9 @@
   </ion-item>
 
   <div class="buttons">
-    <button (click)="signup()" ion-button color="light" block>Criar conta</button>
     <button (click)="login()" ion-button block>Entrar</button>
+    <ion-item-divider class="button-divider">Ou</ion-item-divider>
+    <button (click)="signup()" ion-button color="light" block>Criar conta</button>
     <button (click)="loginWithGoogle()" ion-button icon-left color="danger" block>
       <ion-icon name="logo-google"></ion-icon>
       Google
