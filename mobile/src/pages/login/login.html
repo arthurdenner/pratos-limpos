@@ -1,32 +1,34 @@
-<!--
-  Generated template for the LoginPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-content padding>
   <div>
     <ion-img class="logo" src="../../assets/imgs/lunch.svg"></ion-img>
     <p class="logo-name">Pratos Limpos</p>
   </div>
 
-  <ion-item>
-    <ion-label color="primary" stacked>E-mail</ion-label>
-    <ion-input [(ngModel)]="email"></ion-input>
-  </ion-item>
+  <form [formGroup]="user" (ngSubmit)="login()">
+    <ion-item>
+      <ion-label color="primary" stacked>E-mail</ion-label>
+      <ion-input autofocus formControlName="email" type="email"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" stacked>Senha</ion-label>
-    <ion-input [(ngModel)]="password" type="password"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary" stacked>Senha</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
 
-  <div class="buttons">
-    <button (click)="login()" ion-button block>Entrar</button>
-    <ion-item-divider class="button-divider">Ou</ion-item-divider>
-    <button (click)="signup()" ion-button color="light" block>Criar conta</button>
-    <button (click)="loginWithGoogle()" ion-button icon-left color="danger" block>
-      <ion-icon name="logo-google"></ion-icon>
-      Google
-    </button>
-  </div>
+    <div class="buttons">
+      <button ion-button block [disabled]="!user.valid">
+        Entrar
+      </button>
+      <ion-item-divider class="button-divider">Ou</ion-item-divider>
+      <button
+        (click)="toToSignUp()"
+        block
+        color="light"
+        ion-button
+        type="button"
+      >
+        Criar conta
+      </button>
+    </div>
+  </form>
 </ion-content>

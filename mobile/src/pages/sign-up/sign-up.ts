@@ -6,7 +6,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import isEmpty from 'lodash/fp/isEmpty';
-import pick from 'lodash/fp/pick';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
@@ -57,12 +56,19 @@ export class SignUpPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  login(email, password) {
+  login(email, name, password) {
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.tabs.show();
-        this.navCtrl.setRoot(HomePage);
+      .then(user => {
+        const userData = { uid: user.uid, email, name };
+
+        this.storage
+          .set(APP_KEY, userData)
+          .then(() => {
+            this.tabs.show();
+            this.navCtrl.setRoot(HomePage);
+          })
+          .catch(err => alert(err.message));
       })
       .catch(err => alert(err.message));
   }
@@ -74,14 +80,11 @@ export class SignUpPage {
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
         const userRef = this.db.object(`users/${user.uid}`);
-        const userData = {
-          ...pick(['email', 'uid'], user),
-          name,
-        };
+        const userData = { uid: user.uid, email, name };
 
         userRef
           .update(userData)
-          .then(() => this.login(email, password))
+          .then(() => this.login(email, name, password))
           .catch(err => alert(err.message));
       })
       .catch(err => alert(err.message));

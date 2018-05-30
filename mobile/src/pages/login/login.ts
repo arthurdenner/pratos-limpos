@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import isEmpty from 'lodash/fp/isEmpty';
-import pick from 'lodash/fp/pick';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
+import { SignUpPage } from '../sign-up/sign-up';
 import { APP_KEY } from '../../app/constants';
 
 @IonicPage()
@@ -16,8 +17,7 @@ import { APP_KEY } from '../../app/constants';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  public email: string = 'arthurdenner7@gmail.com';
-  public password: string = '123456';
+  private user: FormGroup;
 
   constructor(
     public navCtrl: NavController,
@@ -25,8 +25,17 @@ export class LoginPage {
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
-    private tabs: TabsService
-  ) {}
+    private tabs: TabsService,
+    private formBuilder: FormBuilder
+  ) {
+    this.user = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
+    });
+  }
 
   ionViewDidLoad() {
     this.tabs.hide();
@@ -39,87 +48,29 @@ export class LoginPage {
           this.navCtrl.setRoot(HomePage);
         }
       })
-      .catch(err => {
-        console.error(err);
-        alert('An error occured reading from the storage!');
-      });
+      .catch(err => alert('An error occured reading from the storage!'));
   }
 
-  signup() {
-    this.firebaseAuth.auth
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .then(user => {
-        const userRef = this.db.object(`users/${user.uid}`);
-        const userData = pick(['displayName', 'email', 'uid'], user);
-
-        userRef
-          .update(userData)
-          .then(() => {
-            console.log('Signed up successfully!');
-            this.login();
-          })
-          .catch(err => {
-            alert(err.message);
-          });
-      })
-      .catch(err => {
-        alert(err.message);
-      });
+  toToSignUp() {
+    this.navCtrl.setRoot(SignUpPage);
   }
 
   login() {
+    const { email, password } = this.user.value;
+
     this.firebaseAuth.auth
-      .signInWithEmailAndPassword(this.email, this.password)
+      .signInWithEmailAndPassword(email, password)
       .then(user => {
-        const userData = pick(['displayName', 'email', 'uid'], user);
+        const userData = { uid: user.uid, email, name: user.name };
 
         this.storage
           .set(APP_KEY, userData)
           .then(() => {
-            console.log('Logged in successfully!');
             this.tabs.show();
             this.navCtrl.setRoot(HomePage);
           })
-          .catch(err => {
-            alert(err.message);
-          });
+          .catch(err => alert(err.message));
       })
-      .catch(err => {
-        alert(err.message);
-      });
-    }
-
-  loginWithGoogle() {
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-
-    this.firebaseAuth.auth
-      .signInWithRedirect(googleProvider)
-      .then(user => {
-        const userRef = this.db.object(`users/${user.uid}`);
-
-        userRef.valueChanges().subscribe(value => {
-          const userData = pick(['displayName', 'email', 'uid'], user);
-          if (!value) {
-            userRef.update(userData).catch(err => {
-              console.error(err);
-              alert('An error occured trying to signup with Google!');
-            });
-          }
-
-          this.storage
-            .set(APP_KEY, userData)
-            .then(() => {
-              console.log('Logged in successfully!');
-              this.tabs.show();
-              this.navCtrl.setRoot(HomePage);
-            })
-            .catch(err => {
-              alert(err.message);
-            });
-        });
-      })
-      .catch(err => {
-        alert(err.message);
-      });
+      .catch(err => alert(err.message));
   }
 }
