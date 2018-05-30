@@ -1,0 +1,40 @@
+page-sign-up {
+  & .item {
+    padding-left: 0;
+  }
+
+  & .buttons {
+    padding-top: 1em;
+
+    & .button {
+      padding-left: 0;
+      margin-bottom: 1em;
+    }
+  }
+
+  .logo {
+    height: 150px;
+    width: auto;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    background-size: cover;
+
+    & img {
+      width: 150px;
+    }
+  }
+
+  .logo-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 0;
+  }
+
+  .button-divider {
+    text-align: center;
+    border-bottom: none;
+  }
+}

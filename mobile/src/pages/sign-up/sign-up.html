@@ -1,0 +1,39 @@
+<ion-content padding>
+  <div>
+    <ion-img class="logo" src="../../assets/imgs/lunch.svg"></ion-img>
+    <p class="logo-name">Pratos Limpos</p>
+  </div>
+
+  <form [formGroup]="user" (ngSubmit)="signup()">
+    <ion-item>
+      <ion-label color="primary" stacked>Nome completo</ion-label>
+      <ion-input autofocus formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>E-mail</ion-label>
+      <ion-input formControlName="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>Senha</ion-label>
+      <ion-input formControlName="password" type="password"></ion-input>
+    </ion-item>
+
+    <div class="buttons">
+      <button ion-button block [disabled]="!user.valid">
+        Criar conta
+      </button>
+      <ion-item-divider class="button-divider">Ou</ion-item-divider>
+      <button
+        (click)="toToLogin()"
+        block
+        color="light"
+        ion-button
+        type="button"
+      >
+        Entrar
+      </button>
+    </div>
+  </form>
+</ion-content>
