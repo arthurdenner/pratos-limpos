@@ -61,15 +61,17 @@ export class LoginPage {
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        const userData = { uid: user.uid, email, name: user.name };
+        const userRef = this.db.object(`users/${user.uid}`);
 
-        this.storage
-          .set(APP_KEY, userData)
-          .then(() => {
-            this.tabs.show();
-            this.navCtrl.setRoot(HomePage);
-          })
-          .catch(err => alert(err.message));
+        userRef.valueChanges().subscribe(userObj => {
+          this.storage
+            .set(APP_KEY, userObj)
+            .then(() => {
+              this.tabs.show();
+              this.navCtrl.setRoot(HomePage);
+            })
+            .catch(err => alert(err.message));
+        });
       })
       .catch(err => alert(err.message));
   }

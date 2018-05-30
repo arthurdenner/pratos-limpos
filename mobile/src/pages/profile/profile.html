@@ -3,7 +3,7 @@
     <ion-avatar item-start>
       <img class="profile-avatar" src="{{usuario.photoURL || 'http://4.bp.blogspot.com/-PDqvxCC-8wQ/UPnM3-TWJeI/AAAAAAAAAkc/7J9-SYbKyzQ/s1600/capture-20130118-192904.png'}}">
     </ion-avatar>
-    <h2>{{ usuario.displayName || 'Nome do usuário' }}</h2>
+    <h2>{{ usuario.name || 'Nome do usuário' }}</h2>
     <p>{{ usuario.email || 'E-mail do usuário'}}</p>
   </ion-item>
   <ion-item class="profile-clickable" (click)="selectSchool()">
