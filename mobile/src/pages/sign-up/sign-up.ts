@@ -59,11 +59,16 @@ export class SignUpPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  login(email: string, name: string, password: string) {
+  login(email: string, name: string, password: string, idSchool: string) {
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
-        const userData = { uid: user.uid, email, name };
+        const userData = {
+          email,
+          idSchool,
+          name,
+          uid: user.uid,
+        };
 
         this.storage
           .set(APP_KEY, userData)
@@ -92,7 +97,7 @@ export class SignUpPage {
 
         userRef
           .update(userData)
-          .then(() => this.login(email, name, password))
+          .then(() => this.login(email, name, password, school._id))
           .catch(err => alert(err.message));
       })
       .catch(err => alert(err.message));
