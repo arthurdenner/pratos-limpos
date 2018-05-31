@@ -1,4 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -37,6 +38,7 @@ import firebaseConfig from './firebase-config';
     AngularFireModule.initializeApp(firebaseConfig),
     IonicStorageModule.forRoot(),
     SelectSearchableModule,
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

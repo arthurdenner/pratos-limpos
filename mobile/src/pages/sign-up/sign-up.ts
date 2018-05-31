@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { SelectSearchableComponent } from 'ionic-select-searchable';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,7 +10,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
-import { APP_KEY } from '../../app/constants';
+import { APP_KEY, API_URL } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -19,6 +21,7 @@ export class SignUpPage {
   private user: FormGroup;
 
   constructor(
+    public http: Http,
     public navCtrl: NavController,
     public navParams: NavParams,
     public firebaseAuth: AngularFireAuth,
@@ -28,6 +31,7 @@ export class SignUpPage {
     private formBuilder: FormBuilder
   ) {
     this.user = this.formBuilder.group({
+      idSchool: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: [
@@ -55,7 +59,7 @@ export class SignUpPage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  login(email, name, password) {
+  login(email: string, name: string, password: string) {
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -73,7 +77,10 @@ export class SignUpPage {
   }
 
   signup() {
-    const { email, name, password } = this.user.value;
+    const { email, idSchool, name, password } = this.user.value;
+
+    // TODO: Save in the user's reference
+    console.log(idSchool);
 
     this.firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
@@ -87,5 +94,25 @@ export class SignUpPage {
           .catch(err => alert(err.message));
       })
       .catch(err => alert(err.message));
+  }
+
+  searchSchools(event: { component: SelectSearchableComponent; text: string }) {
+    const text = (event.text || '').trim().toLowerCase();
+
+    if (!text) {
+      event.component.items = [];
+      return;
+    } else if (event.text.length < 3) {
+      return;
+    }
+
+    event.component.isSearching = true;
+
+    this.http
+      .get(`${API_URL}/search-schools/?name=${text}`)
+      .subscribe((response: Response) => {
+        event.component.items = response.json();
+        event.component.isSearching = false;
+      });
   }
 }

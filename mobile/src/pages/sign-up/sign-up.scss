@@ -37,4 +37,14 @@ page-sign-up {
     text-align: center;
     border-bottom: none;
   }
+
+  .select-searchable-label {
+    display: none;
+  }
+
+  .select-searchable-value {
+    padding-left: 0 !important;
+    max-width: 90%;
+    width: 90%;
+  }
 }
