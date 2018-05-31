@@ -31,13 +31,13 @@ export class SignUpPage {
     private formBuilder: FormBuilder
   ) {
     this.user = this.formBuilder.group({
-      idSchool: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: [
         '',
         Validators.compose([Validators.required, Validators.minLength(6)]),
       ],
+      school: ['', Validators.required],
     });
   }
 
@@ -77,16 +77,18 @@ export class SignUpPage {
   }
 
   signup() {
-    const { email, idSchool, name, password } = this.user.value;
-
-    // TODO: Save in the user's reference
-    console.log(idSchool);
+    const { email, name, password, school } = this.user.value;
 
     this.firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(user => {
         const userRef = this.db.object(`users/${user.uid}`);
-        const userData = { uid: user.uid, email, name };
+        const userData = {
+          email,
+          name,
+          idSchool: school._id,
+          uid: user.uid,
+        };
 
         userRef
           .update(userData)
