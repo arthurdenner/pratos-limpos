@@ -1,7 +1,7 @@
 const request = require('request');
 const csvtojson = require('csvtojson');
 const firebase = require('../config/firebase');
-const filterSchools = require('../utils/filter-schools');
+const filterNewSchools = require('../utils/filter-schools');
 const normalizeSchools = require('../utils/normalize-schools');
 
 const getSchoolsByName = async (req, res) => {
@@ -47,11 +47,23 @@ const updateSchools = async (req, res) => {
       }
 
       const normalized = normalizeSchools(schools);
-      const newSchools = filterSchools(normalized, currentSchools);
+      const newSchools = filterNewSchools(normalized, currentSchools);
 
-      const newSchoolsRefs = newSchools.map(s => schoolsRef.push(s));
+      const newSchoolsObject = newSchools.reduce((acc, school) => {
+        const key = schoolsRef.push().key;
 
-      return res.status(200).send(newSchoolsRefs);
+        return {
+          ...acc,
+          [`/${key}`]: {
+            ...school,
+            _id: key,
+          },
+        };
+      }, {});
+
+      schoolsRef.update(newSchoolsObject);
+
+      return res.status(200).send(Object.values(newSchoolsObject));
     });
 };
 
