@@ -1,15 +1,35 @@
 <ion-content padding>
   <ion-item>
     <ion-avatar item-start>
-      <img class="profile-avatar" src="{{usuario.photoURL || 'http://4.bp.blogspot.com/-PDqvxCC-8wQ/UPnM3-TWJeI/AAAAAAAAAkc/7J9-SYbKyzQ/s1600/capture-20130118-192904.png'}}">
+      <img class="profile-avatar" src="{{loggedUser.photoURL || 'http://4.bp.blogspot.com/-PDqvxCC-8wQ/UPnM3-TWJeI/AAAAAAAAAkc/7J9-SYbKyzQ/s1600/capture-20130118-192904.png'}}">
     </ion-avatar>
-    <h2>{{ usuario.name || 'Nome do usuário' }}</h2>
-    <p>{{ usuario.email || 'E-mail do usuário'}}</p>
+    <h2>{{ loggedUser.name || 'Nome do usuário' }}</h2>
+    <p>{{ loggedUser.email || 'E-mail do usuário'}}</p>
   </ion-item>
   <ion-item class="profile-clickable" (click)="selectSchool()">
     Sua escola:
-    <p *ngIf="usuario.school">{{usuario.school}}</p>
-    <p *ngIf="!usuario.school">Não há escola cadastrada</p>
+    <select-searchable
+      *ngIf="loggedUser.school"
+      [(ngModel)]="loggedUser.school"
+      itemValueField="_id"
+      itemTextField="name"
+      [items]="schools"
+      [canSearch]="true"
+      (onChange)="searchSchools($event)"
+    >
+    </select-searchable>
+    <!-- <select-searchable
+
+      [(ngModel)]="loggedUser.school.name"
+      itemValueField="_id"
+      itemTextField="name"
+      [items]="schools"
+      [canSearch]="true"
+      searchPlaceholder="Digite 3 caracteres ou mais"
+      (onSearch)="searchSchools($event)"
+    >
+    </select-searchable> -->
+    <p *ngIf="!loggedUser.school">Não há escola cadastrada</p>
   </ion-item>
   <ion-item class="profile-clickable" (click)="signOut()">
     Sair
