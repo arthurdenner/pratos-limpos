@@ -14,8 +14,10 @@ import { APP_KEY, API_URL } from '../../app/constants';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public loggedUser = {};
-  public schools: any = [];
+  public loggedUser = {
+    idSchool: '',
+    uid: ''
+  };
 
   constructor(
     public http: Http,
@@ -33,7 +35,6 @@ export class ProfilePage {
         const userSchoolRef = this.db.object(`schools/${storageData.idSchool}`);
 
         userSchoolRef.valueChanges().subscribe(school => {
-          this.schools = [school];
           this.loggedUser = {
             ...storageData,
             school,
@@ -45,7 +46,6 @@ export class ProfilePage {
 
   searchSchools(event: { component: SelectSearchableComponent; text: string }) {
     const text = (event.text || '').trim().toLowerCase();
-    console.log('text', text);
 
     if (!text) {
       event.component.items = [];
@@ -59,11 +59,15 @@ export class ProfilePage {
     this.http
       .get(`${API_URL}/search-schools/?name=${text}`)
       .subscribe((response: Response) => {
-        console.log(response.json())
-        this.schools = [];
         event.component.items = response.json();
         event.component.isSearching = false;
       });
+  }
+
+  updateUserSchool({ value }) {
+    this.loggedUser.idSchool = value._id;
+    this.storage.set(APP_KEY, this.loggedUser);
+    this.db.object(`users/${this.loggedUser.uid}/idSchool`).set(value._id);
   }
 
   signOut() {

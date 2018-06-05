@@ -13,22 +13,11 @@
       [(ngModel)]="loggedUser.school"
       itemValueField="_id"
       itemTextField="name"
-      [items]="schools"
       [canSearch]="true"
-      (onChange)="searchSchools($event)"
-    >
-    </select-searchable>
-    <!-- <select-searchable
-
-      [(ngModel)]="loggedUser.school.name"
-      itemValueField="_id"
-      itemTextField="name"
-      [items]="schools"
-      [canSearch]="true"
-      searchPlaceholder="Digite 3 caracteres ou mais"
+      (onChange)="updateUserSchool($event)"
       (onSearch)="searchSchools($event)"
     >
-    </select-searchable> -->
+    </select-searchable>
     <p *ngIf="!loggedUser.school">Não há escola cadastrada</p>
   </ion-item>
   <ion-item class="profile-clickable" (click)="signOut()">
