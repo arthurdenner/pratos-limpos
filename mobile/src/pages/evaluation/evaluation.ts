@@ -40,4 +40,20 @@ export class EvaluationPage {
   logForm() {
     console.log(this.evaluation);
   }
+
+  onChangeTeveMerenda() {
+    this.evaluation.porqueNaoTeveMerenda = null;
+    this.evaluation.recebeuMerenda = null;
+    this.evaluation.porqueNaoRecebeuMerenda = null;
+    this.evaluation.quantidadeFoiSuficiente = null;
+    this.evaluation.qualidadeDaMerendaRecebida = null;
+    this.evaluation.nivelDeSatisfacao = null;
+  }
+
+  onChangeRecebeuMerenda() {
+    this.evaluation.porqueNaoRecebeuMerenda = null;
+    this.evaluation.quantidadeFoiSuficiente = null;
+    this.evaluation.qualidadeDaMerendaRecebida = null;
+    this.evaluation.nivelDeSatisfacao = null;
+  }
 }

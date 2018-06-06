@@ -14,6 +14,7 @@
           name="evaluation.teveMerenda"
           cancelText="Cancelar"
           okText="Confirmar"
+          (ionChange)="onChangeTeveMerenda($event)"
         >
           <ion-option value="sim">Sim</ion-option>
           <ion-option value="nao">Não</ion-option>
@@ -43,6 +44,7 @@
           name="evaluation.recebeuMerenda"
           cancelText="Cancelar"
           okText="Confirmar"
+          (ionChange)="onChangeRecebeuMerenda($event)"
         >
           <ion-option value="sim">Sim</ion-option>
           <ion-option value="nao">Não</ion-option>
@@ -58,7 +60,7 @@
           cancelText="Cancelar"
           okText="Confirmar"
         >
-          <ion-option value="naoTinhaComidaSuficiente">Não tinha comida suficiente para todos</ion-option>
+          <ion-option value="naoTinhaComidaSuficiente">Não tinha comida suficiente</ion-option>
           <ion-option value="merendaNegadaAoAluno">A merenda foi negada a mim</ion-option>
         </ion-select>
       </ion-item>
