@@ -11,6 +11,7 @@ import { HistoryPage } from '../pages/history/history';
 import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { SignUpPage } from '../pages/sign-up/sign-up';
+import { EvaluationPage } from '../pages/evaluation/evaluation';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TabsService } from '../services/tabs';
 
@@ -30,6 +31,7 @@ import firebaseConfig from './firebase-config';
     LoginPage,
     ProfilePage,
     SignUpPage,
+    EvaluationPage,
     TabsPage,
   ],
   imports: [
@@ -48,6 +50,7 @@ import firebaseConfig from './firebase-config';
     LoginPage,
     ProfilePage,
     SignUpPage,
+    EvaluationPage,
     TabsPage,
   ],
   providers: [

@@ -5,6 +5,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
+import { EvaluationPage } from '../evaluation/evaluation';
 import { APP_KEY } from '../../app/constants';
 
 @Component({
@@ -35,6 +36,6 @@ export class HomePage {
   }
 
   makeEvaluation() {
-    alert('Realizar avaliação');
+    this.navCtrl.push(EvaluationPage);
   }
 }

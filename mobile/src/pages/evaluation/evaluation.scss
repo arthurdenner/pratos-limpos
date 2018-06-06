@@ -1,0 +1,17 @@
+page-evaluation {
+  ion-content {
+    & .scroll-content {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    & .fields {
+      flex: 1;
+    }
+  }
+}

@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Avaliação do dia {{ currentDate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="logForm()">
+    <div class="fields">
+      <ion-item>
+        <ion-label color="primary" stacked>Teve merenda hoje?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.teveMerenda"
+          name="evaluation.teveMerenda"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="sim">Sim</ion-option>
+          <ion-option value="nao">Não</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If the answer for "teveMerenda" was "não"... -->
+      <ion-item *ngIf="evaluation.teveMerenda === 'nao'">
+        <ion-label color="primary" stacked>Por que não teve?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.porqueNaoTeveMerenda"
+          name="evaluation.porqueNaoTeveMerenda"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="naoTinhaComida">Não tinha comida</ion-option>
+          <ion-option value="naoTinhaMerendeira">Não tinha merendeira</ion-option>
+          <ion-option value="naoSei">Não sei</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If the answer for "teveMerenda" was "sim"... -->
+      <ion-item *ngIf="evaluation.teveMerenda === 'sim'">
+        <ion-label color="primary" stacked>Você recebeu merenda?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.recebeuMerenda"
+          name="evaluation.recebeuMerenda"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="sim">Sim</ion-option>
+          <ion-option value="nao">Não</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If the answer for "recebeuMerenda" was "não"... -->
+      <ion-item *ngIf="evaluation.recebeuMerenda === 'nao'">
+        <ion-label color="primary" stacked>Por que não recebeu?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.porqueNaoRecebeuMerenda"
+          name="evaluation.porqueNaoRecebeuMerenda"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="naoTinhaComidaSuficiente">Não tinha comida suficiente para todos</ion-option>
+          <ion-option value="merendaNegadaAoAluno">A merenda foi negada a mim</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If the answer for "recebeuMerenda" was "sim"... -->
+      <ion-item *ngIf="evaluation.recebeuMerenda === 'sim'">
+        <ion-label color="primary" stacked>A quantidade recebida foi suficiente?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.quantidadeFoiSuficiente"
+          name="evaluation.quantidadeFoiSuficiente"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="sim">Sim</ion-option>
+          <ion-option value="nao">Não</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If "quantidadeFoiSuficiente" was answered... -->
+      <ion-item *ngIf="evaluation.quantidadeFoiSuficiente !== null">
+        <ion-label color="primary" stacked>Qual a qualidade da merenda recebida?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.qualidadeDaMerendaRecebida"
+          name="evaluation.qualidadeDaMerendaRecebida"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="muitoRuim">Muito ruim</ion-option>
+          <ion-option value="ruim">Ruim</ion-option>
+          <ion-option value="regular">Regular</ion-option>
+          <ion-option value="boa">Boa</ion-option>
+          <ion-option value="muitoBoa">Muito boa</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- If "qualidadeDaMerendaRecebida" was answered... -->
+      <ion-item *ngIf="evaluation.qualidadeDaMerendaRecebida !== null">
+        <ion-label color="primary" stacked>Qual seu nível de satisfação?</ion-label>
+        <ion-select
+          [(ngModel)]="evaluation.nivelDeSatisfacao"
+          name="evaluation.nivelDeSatisfacao"
+          cancelText="Cancelar"
+          okText="Confirmar"
+        >
+          <ion-option value="muitoInsatisfeito">Muito insatisfeito</ion-option>
+          <ion-option value="insatisfeito">Insatisfeito</ion-option>
+          <ion-option value="indiferente">Indiferente</ion-option>
+          <ion-option value="satisfeito">Satisfeito</ion-option>
+          <ion-option value="muitoSatisfeito">Muito satisfeito</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <button ion-button type="submit" block>Finalizar avaliação</button>
+  </form>
+
+</ion-content>
