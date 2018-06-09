@@ -18,5 +18,9 @@
 div.alert-wrapper {
 	div.alert-message {
 		display: none;
-	}
+  }
+
+  div.alert-radio-group {
+    overflow: auto;
+  }
 }

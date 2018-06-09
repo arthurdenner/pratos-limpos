@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TabsService } from '../../services/tabs';
-import format from 'date-fns/format';
-import pt from 'date-fns/locale/pt';
 
 @IonicPage()
 @Component({
@@ -10,9 +8,6 @@ import pt from 'date-fns/locale/pt';
   templateUrl: 'evaluation.html',
 })
 export class EvaluationPage {
-  public currentDate = format(new Date(), 'DD [de] MMMM [de] YYYY', {
-    locale: pt,
-  });
   private evaluation = {
     teveMerenda: null,
     porqueNaoTeveMerenda: null,
@@ -55,5 +50,35 @@ export class EvaluationPage {
     this.evaluation.quantidadeFoiSuficiente = null;
     this.evaluation.qualidadeDaMerendaRecebida = null;
     this.evaluation.nivelDeSatisfacao = null;
+  }
+
+  isSubmitDisabled() {
+    const {
+      teveMerenda,
+      porqueNaoTeveMerenda,
+      recebeuMerenda,
+      porqueNaoRecebeuMerenda,
+      quantidadeFoiSuficiente,
+      qualidadeDaMerendaRecebida,
+      nivelDeSatisfacao,
+    } = this.evaluation;
+
+    if (teveMerenda === null) {
+      return true;
+    } else if (teveMerenda === 'nao') {
+      return porqueNaoTeveMerenda === null;
+    }
+
+    if (recebeuMerenda === null) {
+      return true;
+    } else if (recebeuMerenda === 'nao') {
+      return porqueNaoRecebeuMerenda === null;
+    }
+
+    return (
+      quantidadeFoiSuficiente === null ||
+      qualidadeDaMerendaRecebida === null ||
+      nivelDeSatisfacao === null
+    );
   }
 }

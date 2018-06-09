@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Avaliação do dia {{ currentDate }}</ion-title>
+    <ion-title>Avaliação do dia</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -113,7 +113,14 @@
         </ion-select>
       </ion-item>
     </div>
-    <button ion-button type="submit" block>Finalizar avaliação</button>
+    <button
+      block
+      ion-button
+      type="submit"
+      [disabled]="isSubmitDisabled()"
+    >
+      Finalizar avaliação
+    </button>
   </form>
 
 </ion-content>
