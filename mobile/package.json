@@ -8,7 +8,7 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
-    "serve": "ionic-app-scripts serve"
+    "serve": "ionic-app-scripts serve --lab"
   },
   "dependencies": {
     "@angular/animations": "5.2.10",
