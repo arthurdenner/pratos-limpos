@@ -16,7 +16,7 @@ import { APP_KEY, LABELS } from '../../app/constants';
   templateUrl: 'home.html',
 })
 export class HomePage {
-  public currentDate = format(new Date(), 'dddd, DD [de] MMMM [de] YYYY', {
+  public currentDate = format(new Date(), 'dddd, DD/MM/YYYY', {
     locale: pt,
   });
   public evaluatedToday: boolean = false;

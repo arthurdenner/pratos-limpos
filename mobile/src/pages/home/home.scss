@@ -10,9 +10,10 @@ page-home {
     flex-direction: column;
   }
 
-  .home-data-hoje {
+  .home-current-date {
     text-align: center;
     font-size: 1.5em;
+    text-transform: capitalize;
   }
 
   .home-avaliacao {
