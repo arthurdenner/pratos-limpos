@@ -1,6 +1,15 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  IonicPage,
+  ModalController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
+import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
+import { APP_KEY } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -8,14 +17,51 @@ import isEmpty from 'lodash/fp/isEmpty';
   templateUrl: 'history.html',
 })
 export class HistoryPage {
-  public hasAvaliacoes = false;
-  public avaliacoes = [];
+  public hasEvaluations = false;
+  public evaluations = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    private db: AngularFireDatabase,
+    private modalCtrl: ModalController,
+    private storage: Storage,
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {}
 
   ionViewDidLoad() {
-    console.log('TODO: Buscar avaliações anteriores');
+    this.storage
+      .get(APP_KEY)
+      .then(storageData => {
+        this.db
+          .list('/evaluations', ref =>
+            ref.orderByChild('idUser').equalTo(`${storageData.uid}`)
+          )
+          .valueChanges()
+          .subscribe((evaluations: any) => {
+            if (isEmpty(evaluations)) {
+              return;
+            }
 
-    this.hasAvaliacoes = !isEmpty(this.avaliacoes);
+            this.evaluations = evaluations;
+            this.hasEvaluations = true;
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('An error occured reading from the storage!');
+      });
+  }
+
+  showEvaluation(data) {
+    const modalData = {
+      evaluation: data.evaluation,
+    };
+
+    const evaluationModal = this.modalCtrl.create(
+      EvaluationModalPage,
+      modalData
+    );
+
+    evaluationModal.present();
   }
 }

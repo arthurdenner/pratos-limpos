@@ -1,3 +1,18 @@
 <ion-content padding>
-  <p *ngIf="!hasAvaliacoes">Nenhuma avaliação encontrada</p>
+
+  <ion-list>
+    <ion-list-header>
+      Avaliações
+    </ion-list-header>
+    <p *ngIf="!hasEvaluations">Nenhuma avaliação encontrada</p>
+    <ion-item-group *ngIf="hasEvaluations">
+      <button
+        ion-item
+        (click)="showEvaluation(ev)"
+        *ngFor="let ev of evaluations"
+      >
+        <p style="font-weight: bold">Avaliação do dia {{ ev.date | date: 'dd/MM/yyyy' }}</p>
+      </button>
+    </ion-item-group>
+  </ion-list>
 </ion-content>

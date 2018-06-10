@@ -1,5 +1,14 @@
 page-history {
-  p {
-    text-align: center;
+  .evaluation {
+    border: 1px solid #222;
+    border-radius: 3px;
+    padding: 1em;
+  }
+
+  ion-list {
+    & button, ion-list-header {
+      padding-left: 0 !important;
+
+    }
   }
 }
