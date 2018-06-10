@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { ModalController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
+import map from 'lodash/map';
 import format from 'date-fns/format';
 import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
 import { EvaluationPage } from '../evaluation/evaluation';
-import { APP_KEY } from '../../app/constants';
+import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
+import { APP_KEY, LABELS } from '../../app/constants';
 
 @Component({
   selector: 'page-home',
@@ -16,8 +19,15 @@ export class HomePage {
   public currentDate = format(new Date(), 'dddd, DD [de] MMMM [de] YYYY', {
     locale: pt,
   });
+  public evaluatedToday: boolean = false;
+  public todayEvaluation: any = null;
 
-  constructor(public navCtrl: NavController, public storage: Storage) {}
+  constructor(
+    private db: AngularFireDatabase,
+    private modalCtrl: ModalController,
+    public navCtrl: NavController,
+    public storage: Storage
+  ) {}
 
   ionViewDidLoad() {
     this.storage
@@ -26,16 +36,54 @@ export class HomePage {
         if (isEmpty(storageData)) {
           this.navCtrl.setRoot(LoginPage);
         }
+
+        const today = format(new Date(), 'YYYY-MM-DD');
+
+        this.db
+          .list('/evaluations', ref =>
+            ref
+              .orderByChild('idUser_date')
+              .equalTo(`${storageData.uid}_${today}`)
+          )
+          .valueChanges()
+          .subscribe(([todayEvaluation]: any) => {
+            if (!todayEvaluation) {
+              return;
+            }
+
+            this.todayEvaluation = this.formatEvaluation(
+              todayEvaluation.evaluation
+            );
+            this.evaluatedToday = true;
+          });
       })
       .catch(err => {
         console.error(err);
         alert('An error occured reading from the storage!');
       });
+  }
 
-    console.log('TODO: Buscar avaliação do dia!');
+  formatEvaluation(evaluation) {
+    return map(evaluation, (value, key) => ({
+      question: LABELS[key],
+      answer: LABELS[value],
+    })).reverse();
   }
 
   makeEvaluation() {
     this.navCtrl.push(EvaluationPage);
+  }
+
+  showEvaluation() {
+    const modalData = {
+      evaluation: this.todayEvaluation,
+    };
+
+    const evaluationModal = this.modalCtrl.create(
+      EvaluationModalPage,
+      modalData
+    );
+
+    evaluationModal.present();
   }
 }

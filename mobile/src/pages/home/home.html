@@ -4,10 +4,16 @@
   </p>
 
   <div class="home-container">
-    <div class="home-avaliacao">
+    <div *ngIf="!evaluatedToday" class="home-avaliacao">
       <h5>Você ainda não avaliou hoje</h5>
 
       <button ion-button (click)="makeEvaluation()">Realizar avaliação</button>
+    </div>
+
+    <div *ngIf="evaluatedToday" class="home-avaliacao">
+      <h5>Você já avaliou hoje</h5>
+
+      <button ion-button (click)="showEvaluation()">Ver avaliação</button>
     </div>
   </div>
 </ion-content>

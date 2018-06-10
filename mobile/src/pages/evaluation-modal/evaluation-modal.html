@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Avaliação</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeEvaluation()">Fechar</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngFor="let property of evaluation">
+    <span style="font-weight: bold">* {{ property.question }}</span>
+    <p style="margin-top: 0.3em">{{ property.answer }}</p>
+  </div>
+</ion-content>
