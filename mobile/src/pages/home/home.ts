@@ -34,6 +34,7 @@ export class HomePage {
       .then(storageData => {
         if (isEmpty(storageData)) {
           this.navCtrl.setRoot(LoginPage);
+          return;
         }
 
         const today = format(new Date(), 'YYYY-MM-DD');
