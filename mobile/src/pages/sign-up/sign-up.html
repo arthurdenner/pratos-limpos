@@ -28,6 +28,8 @@
       itemTextField="name"
       [canSearch]="true"
       searchPlaceholder="Digite 3 caracteres ou mais"
+      closeButtonText="Cancelar"
+      noItemsFoundText="Nenhuma escola encontrada"
       (onSearch)="searchSchools($event)"
       >
       </select-searchable>
@@ -37,7 +39,7 @@
       <button ion-button block [disabled]="!user.valid">
         Criar conta
       </button>
-      <ion-item-divider class="button-divider">Ou</ion-item-divider>
+      <p style="text-align: center">ou</p>
       <button
         (click)="toToLogin()"
         block
