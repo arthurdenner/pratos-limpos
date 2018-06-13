@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -24,6 +24,7 @@ export class ProfilePage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public storage: Storage,
+    private alertCtrl: AlertController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase
   ) {}
@@ -41,7 +42,14 @@ export class ProfilePage {
           };
         });
       })
-      .catch(err => alert('An error occured reading from the storage!'));
+      .catch(err => {              
+        const errorMessage = getErrorMessage('localStorage');
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   searchSchools(event: { component: SelectSearchableComponent; text: string }) {
@@ -75,7 +83,14 @@ export class ProfilePage {
       this.storage
         .set(APP_KEY, {})
         .then(() => this.navCtrl.setRoot(LoginPage))
-        .catch(err => alert('An error occured trying to sign out!'));
+        .catch(err => {              
+          const errorMessage = getErrorMessage('signOut');
+
+          this.alertCtrl.create({
+            subTitle: errorMessage,
+            buttons: ['OK'],
+          }).present();
+        });
     });
   }
 }

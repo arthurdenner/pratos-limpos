@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {
+  AlertController,
   IonicPage,
   ModalController,
   NavController,
@@ -24,6 +25,7 @@ export class HistoryPage {
     private db: AngularFireDatabase,
     private modalCtrl: ModalController,
     private storage: Storage,
+    private alertCtrl: AlertController,
     public navCtrl: NavController,
     public navParams: NavParams
   ) {}
@@ -46,9 +48,13 @@ export class HistoryPage {
             this.hasEvaluations = true;
           });
       })
-      .catch(err => {
-        console.error(err);
-        alert('An error occured reading from the storage!');
+      .catch(err => {              
+        const errorMessage = getErrorMessage('localStorage');
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
       });
   }
 

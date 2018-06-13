@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from 'ionic-angular';
+import { AlertController, ModalController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
@@ -55,9 +55,13 @@ export class HomePage {
             this.evaluatedToday = true;
           });
       })
-      .catch(err => {
-        console.error(err);
-        alert('An error occured reading from the storage!');
+      .catch(err => {              
+        const errorMessage = getErrorMessage('localStorage');
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
       });
   }
 

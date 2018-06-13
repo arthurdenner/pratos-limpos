@@ -33,3 +33,17 @@ export const LABELS = {
   satisfeito: 'Satisfeito',
   muitoSatisfeito: 'Muito satisfeito',
 };
+
+const NO_USER_FOUND = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+const WRONG_PASSWORD = 'The password is invalid or the user does not have a password.';
+const USED_EMAIL = 'The email address is already in use by another account.';
+
+const ERRORS = {
+  [NO_USER_FOUND]: 'Não há usuário com o e-mail informado',
+  [WRONG_PASSWORD]: 'Senha incorreta',
+  [USED_EMAIL]: 'Já existe conta com o e-mail informado',
+  localStorage: 'Houve um erro ao ler os dados do aplicativo',
+  signOut: 'Houve um erro ao tentar sair do aplicativo'
+}
+
+export const getErrorMessage = errorMessage => ERRORS[errorMessage] || 'Ocorreu um erro';

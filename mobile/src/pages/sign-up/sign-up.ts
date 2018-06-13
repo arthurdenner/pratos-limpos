@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -10,7 +10,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
-import { APP_KEY, API_URL } from '../../app/constants';
+import { APP_KEY, API_URL, getErrorMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -24,6 +24,7 @@ export class SignUpPage {
     public http: Http,
     public navCtrl: NavController,
     public navParams: NavParams,
+    private alertCtrl: AlertController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
@@ -52,7 +53,14 @@ export class SignUpPage {
           this.navCtrl.setRoot(HomePage);
         }
       })
-      .catch(err => alert('An error occured reading from the storage!'));
+      .catch(err => {              
+        const errorMessage = getErrorMessage('localStorage');
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   toToLogin() {
@@ -76,9 +84,23 @@ export class SignUpPage {
             this.tabs.show();
             this.navCtrl.setRoot(HomePage);
           })
-          .catch(err => alert(err.message));
+          .catch(err => {              
+            const errorMessage = getErrorMessage(err.message);
+
+            this.alertCtrl.create({
+              subTitle: errorMessage,
+              buttons: ['OK'],
+            }).present();
+          });
       })
-      .catch(err => alert(err.message));
+      .catch(err => {              
+        const errorMessage = getErrorMessage(err.message);
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   signup() {
@@ -98,9 +120,23 @@ export class SignUpPage {
         userRef
           .update(userData)
           .then(() => this.login(email, name, password, school._id))
-          .catch(err => alert(err.message));
+          .catch(err => {              
+            const errorMessage = getErrorMessage(err.message);
+
+            this.alertCtrl.create({
+              subTitle: errorMessage,
+              buttons: ['OK'],
+            }).present();
+          });
       })
-      .catch(err => alert(err.message));
+      .catch(err => {              
+        const errorMessage = getErrorMessage(err.message);
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   searchSchools(event: { component: SelectSearchableComponent; text: string }) {

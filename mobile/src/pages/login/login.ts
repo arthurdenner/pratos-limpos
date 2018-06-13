@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -8,7 +8,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { SignUpPage } from '../sign-up/sign-up';
-import { APP_KEY } from '../../app/constants';
+import { APP_KEY, getErrorMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -21,6 +21,7 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    private alertCtrl: AlertController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
@@ -47,7 +48,14 @@ export class LoginPage {
           this.navCtrl.setRoot(HomePage);
         }
       })
-      .catch(err => alert('An error occured reading from the storage!'));
+    .catch(err => {              
+      const errorMessage = getErrorMessage('localStorage');
+
+      this.alertCtrl.create({
+        subTitle: errorMessage,
+        buttons: ['OK'],
+      }).present();
+    });
   }
 
   toToSignUp() {
@@ -69,9 +77,23 @@ export class LoginPage {
               this.tabs.show();
               this.navCtrl.setRoot(HomePage);
             })
-            .catch(err => alert(err.message));
+            .catch(err => {              
+              const errorMessage = getErrorMessage(err.message);
+
+              this.alertCtrl.create({
+                subTitle: errorMessage,
+                buttons: ['OK'],
+              }).present();
+            });
         });
       })
-      .catch(err => alert(err.message));
+      .catch(err => {
+        const errorMessage = getErrorMessage(err.message);
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 }

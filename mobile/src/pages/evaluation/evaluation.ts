@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import format from 'date-fns/format';
@@ -30,6 +30,7 @@ export class EvaluationPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private storage: Storage,
+    private alertCtrl: AlertController,
     private tabs: TabsService
   ) {}
 
@@ -42,7 +43,14 @@ export class EvaluationPage {
         this.idSchool = storageData.idSchool;
         this.idUser = storageData.uid;
       })
-      .catch(err => alert('An error occured reading from the storage!'));
+      .catch(err => {              
+        const errorMessage = getErrorMessage('localStorage');
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   ionViewWillLeave() {
@@ -63,10 +71,23 @@ export class EvaluationPage {
       })
       .then(
         () => {
-          alert('Avaliação enviada com sucesso! Obrigado!');
+          const errorMessage = getErrorMessage('evaluationSuccess');
+
+          this.alertCtrl.create({
+            subTitle: errorMessage,
+            buttons: ['OK'],
+          }).present();
+          
           this.navCtrl.setRoot(HomePage);
         },
-        err => alert('Houve um erro na hora de salvar a avaliação.')
+        err => {
+          const errorMessage = getErrorMessage('evaluationError');
+
+          this.alertCtrl.create({
+            subTitle: errorMessage,
+            buttons: ['OK'],
+          }).present();
+        }
       );
   }
 
