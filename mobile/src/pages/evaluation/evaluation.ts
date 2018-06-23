@@ -5,7 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import format from 'date-fns/format';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
-import { APP_KEY } from '../../app/constants';
+import { APP_KEY, getErrorMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({

@@ -38,7 +38,9 @@ import firebaseConfig from './firebase-config';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'Voltar'
+    }),
     AngularFireModule.initializeApp(firebaseConfig),
     IonicStorageModule.forRoot(),
     SelectSearchableModule,
@@ -65,4 +67,4 @@ import firebaseConfig from './firebase-config';
     TabsService,
   ],
 })
-export class AppModule {}
+export class AppModule { }

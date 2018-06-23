@@ -53,7 +53,7 @@ export class SignUpPage {
           this.navCtrl.setRoot(HomePage);
         }
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
 
         this.alertCtrl.create({
@@ -84,7 +84,7 @@ export class SignUpPage {
             this.tabs.show();
             this.navCtrl.setRoot(HomePage);
           })
-          .catch(err => {              
+          .catch(err => {
             const errorMessage = getErrorMessage(err.message);
 
             this.alertCtrl.create({
@@ -93,7 +93,7 @@ export class SignUpPage {
             }).present();
           });
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage(err.message);
 
         this.alertCtrl.create({
@@ -120,7 +120,7 @@ export class SignUpPage {
         userRef
           .update(userData)
           .then(() => this.login(email, name, password, school._id))
-          .catch(err => {              
+          .catch(err => {
             const errorMessage = getErrorMessage(err.message);
 
             this.alertCtrl.create({
@@ -129,7 +129,7 @@ export class SignUpPage {
             }).present();
           });
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage(err.message);
 
         this.alertCtrl.create({
@@ -149,13 +149,13 @@ export class SignUpPage {
       return;
     }
 
-    event.component.isSearching = true;
+    event.component._isSearching = true;
 
     this.http
       .get(`${API_URL}/search-schools/?name=${text}`)
       .subscribe((response: Response) => {
         event.component.items = response.json();
-        event.component.isSearching = false;
+        event.component._isSearching = false;
       });
   }
 }

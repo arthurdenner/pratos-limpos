@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
 import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
-import { APP_KEY } from '../../app/constants';
+import { APP_KEY, getErrorMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -48,7 +48,7 @@ export class HistoryPage {
             this.hasEvaluations = true;
           });
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
 
         this.alertCtrl.create({

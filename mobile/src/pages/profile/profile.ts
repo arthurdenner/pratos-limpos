@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
-import { APP_KEY, API_URL } from '../../app/constants';
+import { APP_KEY, API_URL, getErrorMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -42,7 +42,7 @@ export class ProfilePage {
           };
         });
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
 
         this.alertCtrl.create({
@@ -62,13 +62,13 @@ export class ProfilePage {
       return;
     }
 
-    event.component.isSearching = true;
+    event.component._isSearching = true;
 
     this.http
       .get(`${API_URL}/search-schools/?name=${text}`)
       .subscribe((response: Response) => {
         event.component.items = response.json();
-        event.component.isSearching = false;
+        event.component._isSearching = false;
       });
   }
 
@@ -83,7 +83,7 @@ export class ProfilePage {
       this.storage
         .set(APP_KEY, {})
         .then(() => this.navCtrl.setRoot(LoginPage))
-        .catch(err => {              
+        .catch(err => {
           const errorMessage = getErrorMessage('signOut');
 
           this.alertCtrl.create({

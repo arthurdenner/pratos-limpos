@@ -8,7 +8,7 @@ import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
 import { EvaluationPage } from '../evaluation/evaluation';
 import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
-import { APP_KEY } from '../../app/constants';
+import { APP_KEY, getErrorMessage } from '../../app/constants';
 
 @Component({
   selector: 'page-home',
@@ -23,6 +23,7 @@ export class HomePage {
 
   constructor(
     private db: AngularFireDatabase,
+    private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     public navCtrl: NavController,
     public storage: Storage
@@ -55,7 +56,7 @@ export class HomePage {
             this.evaluatedToday = true;
           });
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
 
         this.alertCtrl.create({
