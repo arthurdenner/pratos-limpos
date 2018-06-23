@@ -62,13 +62,13 @@ export class ProfilePage {
       return;
     }
 
-    event.component.isSearching = true;
+    event.component._isSearching = true;
 
     this.http
       .get(`${API_URL}/search-schools/?name=${text}`)
       .subscribe((response: Response) => {
         event.component.items = response.json();
-        event.component.isSearching = false;
+        event.component._isSearching = false;
       });
   }
 
