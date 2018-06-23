@@ -24,3 +24,13 @@ div.alert-wrapper {
     overflow: auto;
   }
 }
+
+.buttons {
+  margin-top: 1em !important;
+
+  & .button {
+    padding-left: 0;
+    margin-bottom: 1em;
+    padding-right: 0;
+  }
+}
