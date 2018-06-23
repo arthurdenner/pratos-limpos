@@ -23,14 +23,14 @@
     <ion-label color="primary" stacked>Escola</ion-label>
     <ion-item>
       <select-searchable
-      formControlName="school"
-      itemValueField="_id"
-      itemTextField="name"
-      [canSearch]="true"
-      searchPlaceholder="Digite 3 caracteres ou mais"
-      closeButtonText="Cancelar"
-      noItemsFoundText="Nenhuma escola encontrada"
-      (onSearch)="searchSchools($event)"
+        formControlName="school"
+        itemValueField="_id"
+        itemTextField="name"
+        searchPlaceholder="Digite 3 caracteres ou mais"
+        closeButtonText="Cancelar"
+        noItemsFoundText="Nenhuma escola encontrada"
+        [canSearch]="true"
+        (onSearch)="searchSchools($event)"
       >
       </select-searchable>
     </ion-item>

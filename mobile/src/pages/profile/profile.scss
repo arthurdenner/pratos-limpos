@@ -18,6 +18,10 @@ page-profile {
     cursor: pointer;
   }
 
+  .select-searchable {
+    max-width: inherit !important;
+  }
+
   .select-searchable-label {
     display: none;
   }

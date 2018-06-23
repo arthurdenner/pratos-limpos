@@ -13,15 +13,20 @@
       [(ngModel)]="loggedUser.school"
       itemValueField="_id"
       itemTextField="name"
+      searchPlaceholder="Digite 3 caracteres ou mais"
+      closeButtonText="Cancelar"
+      noItemsFoundText="Nenhuma escola encontrada"
       [canSearch]="true"
       (onChange)="updateUserSchool($event)"
       (onSearch)="searchSchools($event)"
     >
+      <ng-template selectSearchableTitleTemplate>
+        Escolher Escola
+      </ng-template>
     </select-searchable>
     <p *ngIf="!loggedUser.school">Não há escola cadastrada</p>
   </ion-item>
   <ion-item class="profile-clickable" (click)="signOut()">
     Sair
   </ion-item>
-
 </ion-content>
