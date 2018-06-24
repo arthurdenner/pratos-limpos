@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {
   AlertController,
   IonicPage,
+  LoadingController,
   ModalController,
   NavController,
   NavParams,
@@ -26,11 +27,18 @@ export class HistoryPage {
     private modalCtrl: ModalController,
     private storage: Storage,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public navParams: NavParams
-  ) {}
+  ) { }
 
   ionViewDidLoad() {
+    const loading = this.loadingCtrl.create({
+      content: 'Carregando avaliações...',
+    });
+
+    loading.present();
+
     this.storage
       .get(APP_KEY)
       .then(storageData => {
@@ -40,6 +48,8 @@ export class HistoryPage {
           )
           .valueChanges()
           .subscribe((evaluations: any) => {
+            loading.dismiss();
+
             if (isEmpty(evaluations)) {
               return;
             }
@@ -50,6 +60,8 @@ export class HistoryPage {
       })
       .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
+
+        loading.dismiss();
 
         this.alertCtrl.create({
           subTitle: errorMessage,
