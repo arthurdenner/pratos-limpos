@@ -14,7 +14,7 @@ import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
 import { EvaluationPage } from '../evaluation/evaluation';
 import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @Component({
   selector: 'page-home',
@@ -76,7 +76,7 @@ export class HomePage {
           });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
 
         loading.dismiss();
 

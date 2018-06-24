@@ -11,7 +11,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import format from 'date-fns/format';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -51,7 +51,7 @@ export class EvaluationPage {
         this.idUser = storageData.uid;
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
 
         this.alertCtrl.create({
           subTitle: errorMessage,
@@ -85,7 +85,7 @@ export class EvaluationPage {
       })
       .then(
         () => {
-          const errorMessage = getErrorMessage('evaluationSuccess');
+          const errorMessage = getMessage('evaluationSuccess');
 
           this.alertCtrl.create({
             subTitle: errorMessage,
@@ -101,7 +101,7 @@ export class EvaluationPage {
 
         },
         err => {
-          const errorMessage = getErrorMessage('evaluationError');
+          const errorMessage = getMessage('evaluationError');
 
           loading.dismiss();
 

@@ -14,7 +14,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { SignUpPage } from '../sign-up/sign-up';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -56,7 +56,7 @@ export class LoginPage {
         }
       })
     .catch(err => {
-      const errorMessage = getErrorMessage('localStorage');
+      const errorMessage = getMessage('localStorage');
 
       this.alertCtrl.create({
         subTitle: errorMessage,
@@ -92,7 +92,7 @@ export class LoginPage {
               this.navCtrl.setRoot(HomePage);
             })
             .catch(err => {
-              const errorMessage = getErrorMessage(err.message);
+              const errorMessage = getMessage(err.message);
 
               this.alertCtrl.create({
                 subTitle: errorMessage,
@@ -102,7 +102,7 @@ export class LoginPage {
         });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage(err.message);
+        const errorMessage = getMessage(err.message);
 
         this.alertCtrl.create({
           subTitle: errorMessage,

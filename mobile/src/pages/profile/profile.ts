@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
-import { APP_KEY, API_URL, getErrorMessage } from '../../app/constants';
+import { APP_KEY, API_URL, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -43,7 +43,7 @@ export class ProfilePage {
         });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
 
         this.alertCtrl.create({
           subTitle: errorMessage,
@@ -84,7 +84,7 @@ export class ProfilePage {
         .set(APP_KEY, {})
         .then(() => this.navCtrl.setRoot(LoginPage))
         .catch(err => {
-          const errorMessage = getErrorMessage('signOut');
+          const errorMessage = getMessage('signOut');
 
           this.alertCtrl.create({
             subTitle: errorMessage,

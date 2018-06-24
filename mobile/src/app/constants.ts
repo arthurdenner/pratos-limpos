@@ -48,4 +48,4 @@ const ERRORS = {
   signOut: 'Houve um erro ao tentar sair do aplicativo',
 }
 
-export const getErrorMessage = errorMessage => ERRORS[errorMessage] || 'Ocorreu um erro';
+export const getMessage = errorMessage => ERRORS[errorMessage] || 'Ocorreu um erro';

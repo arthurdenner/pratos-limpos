@@ -11,7 +11,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
 import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -59,7 +59,7 @@ export class HistoryPage {
           });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
 
         loading.dismiss();
 
