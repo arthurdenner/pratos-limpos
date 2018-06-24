@@ -34,3 +34,17 @@ div.alert-wrapper {
     padding-right: 0;
   }
 }
+
+select-searchable {
+  max-width: inherit !important;
+}
+
+.select-searchable-label {
+  display: none;
+}
+
+.select-searchable-value {
+  padding-left: 0 !important;
+  max-width: 90%;
+  width: 90%;
+}
