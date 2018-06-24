@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -22,6 +28,7 @@ export class LoginPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
@@ -48,7 +55,7 @@ export class LoginPage {
           this.navCtrl.setRoot(HomePage);
         }
       })
-    .catch(err => {              
+    .catch(err => {
       const errorMessage = getErrorMessage('localStorage');
 
       this.alertCtrl.create({
@@ -65,6 +72,13 @@ export class LoginPage {
   login() {
     const { email, password } = this.user.value;
 
+    const loading = this.loadingCtrl.create({
+      content: 'Entrando...',
+      dismissOnPageChange: true,
+    })
+
+    loading.present();
+
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -77,7 +91,7 @@ export class LoginPage {
               this.tabs.show();
               this.navCtrl.setRoot(HomePage);
             })
-            .catch(err => {              
+            .catch(err => {
               const errorMessage = getErrorMessage(err.message);
 
               this.alertCtrl.create({
@@ -94,6 +108,8 @@ export class LoginPage {
           subTitle: errorMessage,
           buttons: ['OK'],
         }).present();
+
+        loading.dismiss();
       });
   }
 }
