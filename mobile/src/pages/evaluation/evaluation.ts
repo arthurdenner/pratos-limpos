@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import format from 'date-fns/format';
@@ -31,6 +37,7 @@ export class EvaluationPage {
     public navParams: NavParams,
     private storage: Storage,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private tabs: TabsService
   ) {}
 
@@ -43,7 +50,7 @@ export class EvaluationPage {
         this.idSchool = storageData.idSchool;
         this.idUser = storageData.uid;
       })
-      .catch(err => {              
+      .catch(err => {
         const errorMessage = getErrorMessage('localStorage');
 
         this.alertCtrl.create({
@@ -61,6 +68,13 @@ export class EvaluationPage {
     const today = format(new Date(), 'YYYY-MM-DD');
     const evaluationsRef = this.db.list('/evaluations');
 
+    const loading = this.loadingCtrl.create({
+      content: 'Salvando avaliação...',
+      dismissOnPageChange: true,
+    });
+
+    loading.present();
+
     evaluationsRef
       .push({
         date: today,
@@ -75,13 +89,21 @@ export class EvaluationPage {
 
           this.alertCtrl.create({
             subTitle: errorMessage,
-            buttons: ['OK'],
+            buttons: [{
+              text: 'OK',
+              handler: () => {
+                this.navCtrl.setRoot(HomePage, {
+                  skipFetchEvaluation: true,
+                });
+              }
+            }],
           }).present();
-          
-          this.navCtrl.setRoot(HomePage);
+
         },
         err => {
           const errorMessage = getErrorMessage('evaluationError');
+
+          loading.dismiss();
 
           this.alertCtrl.create({
             subTitle: errorMessage,
