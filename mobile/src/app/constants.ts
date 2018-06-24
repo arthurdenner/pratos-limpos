@@ -42,8 +42,10 @@ const ERRORS = {
   [NO_USER_FOUND]: 'Não há usuário com o e-mail informado',
   [WRONG_PASSWORD]: 'Senha incorreta',
   [USED_EMAIL]: 'Já existe conta com o e-mail informado',
+  evaluationError: 'Houve um erro ao tentar salvar a avaliação',
+  evaluationSuccess: 'Avaliação realizada com sucesso',
   localStorage: 'Houve um erro ao ler os dados do aplicativo',
-  signOut: 'Houve um erro ao tentar sair do aplicativo'
+  signOut: 'Houve um erro ao tentar sair do aplicativo',
 }
 
 export const getErrorMessage = errorMessage => ERRORS[errorMessage] || 'Ocorreu um erro';
