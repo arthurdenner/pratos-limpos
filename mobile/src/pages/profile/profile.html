@@ -1,32 +1,47 @@
 <ion-content padding>
-  <ion-item>
-    <ion-avatar item-start>
-      <img class="profile-avatar" src="{{loggedUser.photoURL || 'http://4.bp.blogspot.com/-PDqvxCC-8wQ/UPnM3-TWJeI/AAAAAAAAAkc/7J9-SYbKyzQ/s1600/capture-20130118-192904.png'}}">
-    </ion-avatar>
-    <h2>{{ loggedUser.name || 'Nome do usuário' }}</h2>
-    <p>{{ loggedUser.email || 'E-mail do usuário'}}</p>
-  </ion-item>
-  <ion-item class="profile-clickable" (click)="selectSchool()">
-    Sua escola:
-    <select-searchable
-      *ngIf="loggedUser.school"
-      [(ngModel)]="loggedUser.school"
-      itemValueField="_id"
-      itemTextField="name"
-      searchPlaceholder="Digite 3 caracteres ou mais"
-      closeButtonText="Cancelar"
-      noItemsFoundText="Nenhuma escola encontrada"
-      [canSearch]="true"
-      (onChange)="updateUserSchool($event)"
-      (onSearch)="searchSchools($event)"
-    >
-      <ng-template selectSearchableTitleTemplate>
-        Escolher Escola
-      </ng-template>
-    </select-searchable>
-    <p *ngIf="!loggedUser.school">Não há escola cadastrada</p>
-  </ion-item>
-  <ion-item class="profile-clickable" (click)="signOut()">
+  <form class="profile-form" (ngSubmit)="updateProfile()">
+    <ion-item>
+      <ion-label color="primary" stacked>Nome completo</ion-label>
+      <ion-input [(ngModel)]="loggedUser.name" name="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" stacked>E-mail</ion-label>
+      <ion-input disabled type="email" [(ngModel)]="loggedUser.email" name="email"></ion-input>
+    </ion-item>
+
+    <ion-label color="primary" stacked>Escola</ion-label>
+    <ion-item>
+      <select-searchable
+        [(ngModel)]="loggedUser.school"
+        name="school"
+        itemValueField="_id"
+        itemTextField="name"
+        searchPlaceholder="Digite 3 caracteres ou mais"
+        closeButtonText="Cancelar"
+        noItemsFoundText="Nenhuma escola encontrada"
+        [canSearch]="true"
+        (onSearch)="searchSchools($event)"
+      >
+        <ng-template selectSearchableTitleTemplate>
+          Escolher Escola
+        </ng-template>
+      </select-searchable>
+    </ion-item>
+
+    <div class="buttons">
+      <button ion-button block [disabled]="!loggedUser.name" (click)="updateProfile()">
+        Atualizar dados
+      </button>
+    </div>
+  </form>
+  <button
+    (click)="signOut()"
+    block
+    color="secondary"
+    ion-button
+    type="button"
+  >
     Sair
-  </ion-item>
+  </button>
 </ion-content>

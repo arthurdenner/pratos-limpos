@@ -4,6 +4,15 @@ page-profile {
     height: 50px;
   }
 
+  ion-item {
+    padding-left: 0 !important;
+  }
+
+  .scroll-content {
+    display: flex;
+    flex-direction: column;
+  }
+
   .item-md {
     padding-left: 0px;
   }
@@ -13,8 +22,8 @@ page-profile {
     width: 100% !important;
     height: 100% !important;
   }
-
-  .profile-clickable {
-    cursor: pointer;
+  
+  .profile-form {
+    flex: 1;
   }
 }

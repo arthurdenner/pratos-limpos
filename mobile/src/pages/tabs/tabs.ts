@@ -8,7 +8,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'tabs.html',
 })
 export class TabsPage {
-  tab1Root = HomePage;
+  tab1Root = ProfilePage;
   tab2Root = HistoryPage;
   tab3Root = ProfilePage;
 

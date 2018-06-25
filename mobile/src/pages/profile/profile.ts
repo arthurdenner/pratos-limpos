@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {
   AlertController,
   IonicPage,
@@ -20,10 +21,11 @@ import { APP_KEY, API_URL, getMessage } from '../../app/constants';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  public loggedUser = {
-    idSchool: '',
-    uid: ''
-  };
+  private loggedUser: FormGroup;
+  // public loggedUser = {
+  //   idSchool: '',
+  //   uid: ''
+  // };
 
   constructor(
     public http: Http,
@@ -33,8 +35,19 @@ export class ProfilePage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     public firebaseAuth: AngularFireAuth,
-    public db: AngularFireDatabase
-  ) {}
+    public db: AngularFireDatabase,
+    private formBuilder: FormBuilder,
+  ) {
+    this.loggedUser = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
+      school: ['', Validators.required],
+    });
+  }
 
   ionViewDidLoad() {
     const loading = this.loadingCtrl.create({
@@ -54,9 +67,9 @@ export class ProfilePage {
             ...storageData,
             school,
           };
-        });
 
-        loading.dismiss();
+          loading.dismiss();
+        });
       })
       .catch(err => {
         const errorMessage = getMessage('localStorage');
@@ -88,6 +101,10 @@ export class ProfilePage {
         event.component.items = response.json();
         event.component._isSearching = false;
       });
+  }
+
+  updateProfile() {
+    alert('Update profile!');
   }
 
   updateUserSchool({ value }) {

@@ -33,7 +33,7 @@ export class LoginPage {
     public db: AngularFireDatabase,
     public storage: Storage,
     private tabs: TabsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.user = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
