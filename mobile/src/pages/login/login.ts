@@ -104,12 +104,12 @@ export class LoginPage {
       .catch(err => {
         const errorMessage = getMessage(err.message);
 
+        loading.dismiss();
+
         this.alertCtrl.create({
           subTitle: errorMessage,
           buttons: ['OK'],
         }).present();
-
-        loading.dismiss();
       });
   }
 }
