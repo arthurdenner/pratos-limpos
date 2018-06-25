@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,11 +31,19 @@ export class ProfilePage {
     public navParams: NavParams,
     public storage: Storage,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase
   ) {}
 
   ionViewDidLoad() {
+    const loading = this.loadingCtrl.create({
+      content: 'Buscando suas informações...',
+      dismissOnPageChange: true,
+    })
+
+    loading.present();
+
     this.storage
       .get(APP_KEY)
       .then(storageData => {
@@ -41,9 +55,13 @@ export class ProfilePage {
             school,
           };
         });
+
+        loading.dismiss();
       })
       .catch(err => {
         const errorMessage = getMessage('localStorage');
+
+        loading.dismiss();
 
         this.alertCtrl.create({
           subTitle: errorMessage,
