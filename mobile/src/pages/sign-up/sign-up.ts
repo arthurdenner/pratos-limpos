@@ -10,7 +10,7 @@ import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
-import { APP_KEY, API_URL, getErrorMessage } from '../../app/constants';
+import { APP_KEY, API_URL, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -54,7 +54,7 @@ export class SignUpPage {
         }
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
 
         this.alertCtrl.create({
           subTitle: errorMessage,
@@ -85,7 +85,7 @@ export class SignUpPage {
             this.navCtrl.setRoot(HomePage);
           })
           .catch(err => {
-            const errorMessage = getErrorMessage(err.message);
+            const errorMessage = getMessage(err.message);
 
             this.alertCtrl.create({
               subTitle: errorMessage,
@@ -94,7 +94,7 @@ export class SignUpPage {
           });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage(err.message);
+        const errorMessage = getMessage(err.message);
 
         this.alertCtrl.create({
           subTitle: errorMessage,
@@ -121,7 +121,7 @@ export class SignUpPage {
           .update(userData)
           .then(() => this.login(email, name, password, school._id))
           .catch(err => {
-            const errorMessage = getErrorMessage(err.message);
+            const errorMessage = getMessage(err.message);
 
             this.alertCtrl.create({
               subTitle: errorMessage,
@@ -130,7 +130,7 @@ export class SignUpPage {
           });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage(err.message);
+        const errorMessage = getMessage(err.message);
 
         this.alertCtrl.create({
           subTitle: errorMessage,

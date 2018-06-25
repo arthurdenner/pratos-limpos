@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController, NavController } from 'ionic-angular';
+import {
+  AlertController,
+  LoadingController,
+  ModalController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
@@ -8,7 +14,7 @@ import pt from 'date-fns/locale/pt';
 import { LoginPage } from '../login/login';
 import { EvaluationPage } from '../evaluation/evaluation';
 import { EvaluationModalPage } from '../evaluation-modal/evaluation-modal';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @Component({
   selector: 'page-home',
@@ -24,12 +30,23 @@ export class HomePage {
   constructor(
     private db: AngularFireDatabase,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController,
     public navCtrl: NavController,
+    private navParams: NavParams,
     public storage: Storage
-  ) {}
+  ) { }
 
   ionViewDidLoad() {
+    const loading = this.loadingCtrl.create({
+      content: 'Carregando avaliação...',
+      dismissOnPageChange: true,
+    });
+
+    if (!this.navParams.get('skipFetchEvaluation')) {
+      loading.present();
+    }
+
     this.storage
       .get(APP_KEY)
       .then(storageData => {
@@ -48,6 +65,8 @@ export class HomePage {
           )
           .valueChanges()
           .subscribe(([todayEvaluation]: any) => {
+            loading.dismiss();
+
             if (!todayEvaluation) {
               return;
             }
@@ -57,7 +76,9 @@ export class HomePage {
           });
       })
       .catch(err => {
-        const errorMessage = getErrorMessage('localStorage');
+        const errorMessage = getMessage('localStorage');
+
+        loading.dismiss();
 
         this.alertCtrl.create({
           subTitle: errorMessage,

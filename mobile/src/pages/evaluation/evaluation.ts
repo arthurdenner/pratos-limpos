@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import format from 'date-fns/format';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
-import { APP_KEY, getErrorMessage } from '../../app/constants';
+import { APP_KEY, getMessage } from '../../app/constants';
 
 @IonicPage()
 @Component({
@@ -31,6 +37,7 @@ export class EvaluationPage {
     public navParams: NavParams,
     private storage: Storage,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private tabs: TabsService
   ) {}
 
@@ -43,8 +50,8 @@ export class EvaluationPage {
         this.idSchool = storageData.idSchool;
         this.idUser = storageData.uid;
       })
-      .catch(err => {              
-        const errorMessage = getErrorMessage('localStorage');
+      .catch(err => {
+        const errorMessage = getMessage('localStorage');
 
         this.alertCtrl.create({
           subTitle: errorMessage,
@@ -61,6 +68,13 @@ export class EvaluationPage {
     const today = format(new Date(), 'YYYY-MM-DD');
     const evaluationsRef = this.db.list('/evaluations');
 
+    const loading = this.loadingCtrl.create({
+      content: 'Salvando avaliação...',
+      dismissOnPageChange: true,
+    });
+
+    loading.present();
+
     evaluationsRef
       .push({
         date: today,
@@ -71,17 +85,25 @@ export class EvaluationPage {
       })
       .then(
         () => {
-          const errorMessage = getErrorMessage('evaluationSuccess');
+          const errorMessage = getMessage('evaluationSuccess');
 
           this.alertCtrl.create({
             subTitle: errorMessage,
-            buttons: ['OK'],
+            buttons: [{
+              text: 'OK',
+              handler: () => {
+                this.navCtrl.setRoot(HomePage, {
+                  skipFetchEvaluation: true,
+                });
+              }
+            }],
           }).present();
-          
-          this.navCtrl.setRoot(HomePage);
+
         },
         err => {
-          const errorMessage = getErrorMessage('evaluationError');
+          const errorMessage = getMessage('evaluationError');
+
+          loading.dismiss();
 
           this.alertCtrl.create({
             subTitle: errorMessage,
