@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SelectSearchableComponent } from 'ionic-select-searchable';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import {
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams,
+} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -25,6 +31,7 @@ export class SignUpPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
@@ -68,6 +75,13 @@ export class SignUpPage {
   }
 
   login(email: string, name: string, password: string, idSchool: string) {
+    const loading = this.loadingCtrl.create({
+      content: 'Entrando...',
+      dismissOnPageChange: true,
+    })
+
+    loading.present();
+
     this.firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(user => {
@@ -96,6 +110,8 @@ export class SignUpPage {
       .catch(err => {
         const errorMessage = getMessage(err.message);
 
+        loading.dismiss();
+
         this.alertCtrl.create({
           subTitle: errorMessage,
           buttons: ['OK'],
@@ -105,6 +121,13 @@ export class SignUpPage {
 
   signup() {
     const { email, name, password, school } = this.user.value;
+
+    const loading = this.loadingCtrl.create({
+      content: 'Criando conta...',
+      dismissOnPageChange: true,
+    })
+
+    loading.present();
 
     this.firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
@@ -119,9 +142,15 @@ export class SignUpPage {
 
         userRef
           .update(userData)
-          .then(() => this.login(email, name, password, school._id))
+          .then(() => {
+            loading.dismiss();
+
+            this.login(email, name, password, school._id);
+          })
           .catch(err => {
             const errorMessage = getMessage(err.message);
+
+            loading.dismiss();
 
             this.alertCtrl.create({
               subTitle: errorMessage,
@@ -131,6 +160,8 @@ export class SignUpPage {
       })
       .catch(err => {
         const errorMessage = getMessage(err.message);
+
+        loading.dismiss();
 
         this.alertCtrl.create({
           subTitle: errorMessage,

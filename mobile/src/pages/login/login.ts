@@ -33,7 +33,7 @@ export class LoginPage {
     public db: AngularFireDatabase,
     public storage: Storage,
     private tabs: TabsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.user = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -104,12 +104,12 @@ export class LoginPage {
       .catch(err => {
         const errorMessage = getMessage(err.message);
 
+        loading.dismiss();
+
         this.alertCtrl.create({
           subTitle: errorMessage,
           buttons: ['OK'],
         }).present();
-
-        loading.dismiss();
       });
   }
 }
