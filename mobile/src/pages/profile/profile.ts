@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {
   AlertController,
   IonicPage,
@@ -14,6 +13,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
 import { APP_KEY, API_URL, getMessage } from '../../app/constants';
+import { LoggedUser, School, User } from '../../app/types';
 
 @IonicPage()
 @Component({
@@ -21,11 +21,16 @@ import { APP_KEY, API_URL, getMessage } from '../../app/constants';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  private loggedUser: FormGroup;
-  // public loggedUser = {
-  //   idSchool: '',
-  //   uid: ''
-  // };
+  public loggedUser: LoggedUser = {
+    email: '',
+    idSchool: '',
+    name: '',
+    school: {
+      _id: '',
+      name: '',
+    },
+    uid: '',
+  };
 
   constructor(
     public http: Http,
@@ -36,33 +41,21 @@ export class ProfilePage {
     private loadingCtrl: LoadingController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
-    private formBuilder: FormBuilder,
-  ) {
-    this.loggedUser = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(6)]),
-      ],
-      school: ['', Validators.required],
-    });
-  }
+  ) { }
 
   ionViewDidLoad() {
     const loading = this.loadingCtrl.create({
-      content: 'Buscando suas informações...',
-      dismissOnPageChange: true,
+      content: 'Buscando seus dados...',
     })
 
     loading.present();
 
     this.storage
       .get(APP_KEY)
-      .then(storageData => {
+      .then((storageData: User) => {
         const userSchoolRef = this.db.object(`schools/${storageData.idSchool}`);
 
-        userSchoolRef.valueChanges().subscribe(school => {
+        userSchoolRef.valueChanges().subscribe((school: School) => {
           this.loggedUser = {
             ...storageData,
             school,
@@ -104,13 +97,40 @@ export class ProfilePage {
   }
 
   updateProfile() {
-    alert('Update profile!');
+    const { idSchool, name, uid } = this.loggedUser;
+    const userRef = this.db.object(`users/${uid}`);
+
+    const loading = this.loadingCtrl.create({
+      content: 'Atualizando seus dados...',
+    })
+
+    loading.present();
+
+    userRef.update({ idSchool, name })
+      .then(() => {
+        this.storage.set(APP_KEY, this.loggedUser);
+
+        loading.dismiss();
+
+        this.alertCtrl.create({
+          subTitle: 'Dados atualizados com sucesso',
+          buttons: ['OK'],
+        }).present();
+      })
+      .catch(err => {
+        const errorMessage = getMessage('signOut');
+
+        loading.dismiss();
+
+        this.alertCtrl.create({
+          subTitle: errorMessage,
+          buttons: ['OK'],
+        }).present();
+      });
   }
 
   updateUserSchool({ value }) {
     this.loggedUser.idSchool = value._id;
-    this.storage.set(APP_KEY, this.loggedUser);
-    this.db.object(`users/${this.loggedUser.uid}/idSchool`).set(value._id);
   }
 
   signOut() {

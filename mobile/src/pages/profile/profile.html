@@ -21,6 +21,7 @@
         closeButtonText="Cancelar"
         noItemsFoundText="Nenhuma escola encontrada"
         [canSearch]="true"
+        (onChange)="updateUserSchool($event)"
         (onSearch)="searchSchools($event)"
       >
         <ng-template selectSearchableTitleTemplate>
@@ -30,7 +31,7 @@
     </ion-item>
 
     <div class="buttons">
-      <button ion-button block [disabled]="!loggedUser.name" (click)="updateProfile()">
+      <button ion-button block [disabled]="!loggedUser.name">
         Atualizar dados
       </button>
     </div>
