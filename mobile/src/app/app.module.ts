@@ -23,6 +23,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import firebaseConfig from './firebase-config';
+import { ChangePasswordModalPage } from '../pages/change-password-modal/change-password-modal';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import firebaseConfig from './firebase-config';
     SignUpPage,
     EvaluationPage,
     EvaluationModalPage,
+    ChangePasswordModalPage,
     TabsPage,
   ],
   imports: [
@@ -56,6 +58,7 @@ import firebaseConfig from './firebase-config';
     SignUpPage,
     EvaluationPage,
     EvaluationModalPage,
+    ChangePasswordModalPage,
     TabsPage,
   ],
   providers: [

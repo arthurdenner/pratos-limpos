@@ -4,6 +4,7 @@ import {
   AlertController,
   IonicPage,
   LoadingController,
+  ModalController,
   NavController,
   NavParams,
 } from 'ionic-angular';
@@ -14,6 +15,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { LoginPage } from '../login/login';
 import { APP_KEY, API_URL, getMessage } from '../../app/constants';
 import { LoggedUser, School, User } from '../../app/types';
+import { ChangePasswordModalPage } from '../change-password-modal/change-password-modal';
 
 @IonicPage()
 @Component({
@@ -39,6 +41,7 @@ export class ProfilePage {
     public storage: Storage,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
   ) { }
@@ -131,6 +134,10 @@ export class ProfilePage {
 
   updateUserSchool({ value }) {
     this.loggedUser.idSchool = value._id;
+  }
+
+  changePassword() {
+    this.modalCtrl.create(ChangePasswordModalPage).present();
   }
 
   signOut() {

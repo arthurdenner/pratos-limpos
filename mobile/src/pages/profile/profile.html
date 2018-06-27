@@ -1,5 +1,5 @@
 <ion-content padding>
-  <form class="profile-form" (ngSubmit)="updateProfile()">
+  <form (ngSubmit)="updateProfile()">
     <ion-item>
       <ion-label color="primary" stacked>Nome completo</ion-label>
       <ion-input [(ngModel)]="loggedUser.name" name="name"></ion-input>
@@ -34,15 +34,25 @@
       <button ion-button block [disabled]="!loggedUser.name">
         Atualizar dados
       </button>
+      <p style="text-align: center">ou</p>
+      <button
+        ion-button
+        block
+        type="button"
+        (click)="changePassword()"
+      >
+        Trocar senha
+      </button>
+      <p style="text-align: center">ou</p>
+      <button
+        (click)="signOut()"
+        block
+        color="secondary"
+        ion-button
+        type="button"
+      >
+        Sair
+      </button>
     </div>
   </form>
-  <button
-    (click)="signOut()"
-    block
-    color="secondary"
-    ion-button
-    type="button"
-  >
-    Sair
-  </button>
 </ion-content>
