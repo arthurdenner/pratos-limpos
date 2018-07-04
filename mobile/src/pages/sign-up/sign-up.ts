@@ -70,7 +70,7 @@ export class SignUpPage {
       });
   }
 
-  toToLogin() {
+  goToLogin() {
     this.navCtrl.setRoot(LoginPage);
   }
 
