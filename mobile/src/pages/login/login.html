@@ -20,14 +20,18 @@
         Entrar
       </button>
       <p style="text-align: center">ou</p>
+      <button (click)="toToSignUp()" block ion-button type="button">
+        Criar conta
+      </button>
+      <p style="text-align: center">ou</p>
       <button
-        (click)="toToSignUp()"
+        (click)="recoverPassword()"
         block
         color="secondary"
         ion-button
         type="button"
       >
-        Criar conta
+        Recuperar senha
       </button>
     </div>
   </form>

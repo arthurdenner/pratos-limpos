@@ -4,6 +4,7 @@ import {
   AlertController,
   IonicPage,
   LoadingController,
+  ModalController,
   NavController,
   NavParams,
 } from 'ionic-angular';
@@ -13,6 +14,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import isEmpty from 'lodash/fp/isEmpty';
 import { TabsService } from '../../services/tabs';
 import { HomePage } from '../home/home';
+import { RecoverPasswordModalPage } from '../recover-password-modal/recover-password-modal';
 import { SignUpPage } from '../sign-up/sign-up';
 import { APP_KEY, getMessage } from '../../app/constants';
 
@@ -29,6 +31,7 @@ export class LoginPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
     public firebaseAuth: AngularFireAuth,
     public db: AngularFireDatabase,
     public storage: Storage,
@@ -111,5 +114,11 @@ export class LoginPage {
           buttons: ['OK'],
         }).present();
       });
+  }
+
+  recoverPassword() {
+    const { email } = this.user.value;
+
+    this.modalCtrl.create(RecoverPasswordModalPage, { email }).present();
   }
 }

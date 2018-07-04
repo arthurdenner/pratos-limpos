@@ -13,6 +13,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { EvaluationPage } from '../pages/evaluation/evaluation';
 import { EvaluationModalPage } from '../pages/evaluation-modal/evaluation-modal';
+import { RecoverPasswordModalPage } from '../pages/recover-password-modal/recover-password-modal';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TabsService } from '../services/tabs';
 
@@ -36,6 +37,7 @@ import { ChangePasswordModalPage } from '../pages/change-password-modal/change-p
     EvaluationPage,
     EvaluationModalPage,
     ChangePasswordModalPage,
+    RecoverPasswordModalPage,
     TabsPage,
   ],
   imports: [
@@ -59,6 +61,7 @@ import { ChangePasswordModalPage } from '../pages/change-password-modal/change-p
     EvaluationPage,
     EvaluationModalPage,
     ChangePasswordModalPage,
+    RecoverPasswordModalPage,
     TabsPage,
   ],
   providers: [
