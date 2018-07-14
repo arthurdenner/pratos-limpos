@@ -26,6 +26,12 @@ class App extends React.PureComponent {
             onSelectSchool={this.onSelectSchool}
           />
         )}
+        {selectedSchool && (
+          <SelectedSchool
+            onUnselectSchool={this.onUnselectSchool}
+            selectedSchool={selectedSchool}
+          />
+        )}
       </div>
     );
   }
