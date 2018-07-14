@@ -133,6 +133,9 @@ class SelectedSchool extends React.PureComponent {
             ))
             : (
               <ListItem>
+                <ListItemIcon>
+                  <StarIcon />
+                </ListItemIcon>
                 <ListItemText primary="Nenhuma avaliação encontrada" />
               </ListItem>
             )}
