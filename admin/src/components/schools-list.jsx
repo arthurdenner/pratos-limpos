@@ -75,6 +75,7 @@ class SchoolsList extends React.Component {
     const filteredSchools = schools.filter(
       s => s.name.toLowerCase().includes(filterValue.toLowerCase())
     );
+    const numberOfSchools = filteredSchools.length - 1;
 
     return (
       <div>
@@ -121,7 +122,7 @@ class SchoolsList extends React.Component {
                   </ListItemIcon>
                   <ListItemText primary={s.name} secondary={`${s.address} - ${s.city}`} />
                 </ListItem>
-                {idx < filteredSchools.length - 1 && <Divider />}
+                {idx < numberOfSchools && <Divider />}
               </React.Fragment>
             ))
             : (

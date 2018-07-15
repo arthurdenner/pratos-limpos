@@ -12,15 +12,19 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Snackbar from '@material-ui/core/Snackbar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import EvaluationModal from './evaluation-modal';
 import MySnackbarContent from './snackbar';
 import { database } from '../config/firebase';
 import LABELS from '../utils/labels';
+
+const formatDate = date => date.split('-').reverse().join('/');
 
 class SelectedSchool extends React.PureComponent {
   state = {
     errorMessage: '',
     evaluations: [],
     isLoading: true,
+    selectedEvaluation: null,
     showError: false,
   };
 
@@ -42,7 +46,7 @@ class SelectedSchool extends React.PureComponent {
             evaluation: Object.entries(ev.evaluation).map(([key, value]) => ({
               question: LABELS[key],
               answer: LABELS[value],
-            })),
+            })).reverse(),
           }));
 
         this.setState({
@@ -67,9 +71,24 @@ class SelectedSchool extends React.PureComponent {
     })
   }
 
+  onCloseModal = () => {
+    this.setState({ selectedEvaluation: null })
+  }
+
+  onOpenModal = selectedEvaluation => {
+    this.setState({ selectedEvaluation });
+  }
+
   render() {
-    const { errorMessage, evaluations, isLoading, showError } = this.state;
+    const {
+      errorMessage,
+      evaluations,
+      isLoading,
+      selectedEvaluation,
+      showError,
+    } = this.state;
     const { onUnselectSchool, selectedSchool } = this.props;
+    const numberOfEvaluations = evaluations.length - 1;
 
     if (isLoading) {
       return (
@@ -82,6 +101,12 @@ class SelectedSchool extends React.PureComponent {
 
     return (
       <div>
+        {selectedEvaluation && (
+          <EvaluationModal
+            evaluation={selectedEvaluation}
+            onClose={this.onCloseModal}
+          />
+        )}
         <AppBar position="static">
           <Toolbar>
             <IconButton
@@ -116,19 +141,13 @@ class SelectedSchool extends React.PureComponent {
           {evaluations.length > 0 ?
             evaluations.map((ev, idx) => (
               <React.Fragment key={ev.idUser_date}>
-                <ListItem>
+                <ListItem button onClick={() => this.onOpenModal(ev.evaluation)}>
                   <ListItemIcon>
                     <StarIcon />
                   </ListItemIcon>
-                  {ev.evaluation.map(({ answer, question }) => (
-                    <ListItemText
-                      key={question}
-                      primary={question}
-                      secondary={answer}
-                    />
-                  ))}
+                  <ListItemText primary={`Avaliação do dia ${formatDate(ev.date)}`} />
                 </ListItem>
-                {idx < evaluations.length - 1 && <Divider />}
+                {idx < numberOfEvaluations && <Divider />}
               </React.Fragment>
             ))
             : (
