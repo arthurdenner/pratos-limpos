@@ -1,6 +1,7 @@
 import * as React from 'react';
-import SchoolsList from './components/schools-list';
-import SelectedSchool from './components/selected-school';
+// import SchoolsList from './components/schools-list';
+// import SelectedSchool from './components/selected-school';
+import Statistics from './components/statistics';
 
 class App extends React.PureComponent {
   state = {
@@ -16,11 +17,12 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { selectedSchool } = this.state;
+    // const { selectedSchool } = this.state;
 
     return (
       <div className="App">
-        {!selectedSchool && (
+        <Statistics />
+        {/* {!selectedSchool && (
           <SchoolsList
             onCloseSnackbar={this.onCloseSnackbar}
             onSelectSchool={this.onSelectSchool}
@@ -31,7 +33,7 @@ class App extends React.PureComponent {
             onUnselectSchool={this.onUnselectSchool}
             selectedSchool={selectedSchool}
           />
-        )}
+        )} */}
       </div>
     );
   }

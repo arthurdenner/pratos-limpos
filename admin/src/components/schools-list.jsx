@@ -62,7 +62,6 @@ class SchoolsList extends React.Component {
     const { errorMessage, filterValue, isLoading, schools, showError } = this.state;
     const { onSelectSchool } = this.props;
 
-
     if (isLoading) {
       return (
         <React.Fragment>
