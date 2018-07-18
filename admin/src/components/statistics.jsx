@@ -1,10 +1,10 @@
 import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { database } from '../config/firebase';
+import Card from './card';
 
 class Statistics extends React.PureComponent {
   state = {
-
     isLoading: true,
   };
 
@@ -35,6 +35,7 @@ class Statistics extends React.PureComponent {
     this.setState({
       averageUsersBySchools: parseFloat(users.length / schools.length).toFixed(2),
       isLoading: false,
+      numberOfEvaluatedSchools: `(${evaluatedSchools} de ${schools.length})`,
       numberOfEvaluations: evaluations.length,
       numberOfUsers: users.length,
       percentageSchools: `${percentage.toFixed(2)}%`,
@@ -42,7 +43,14 @@ class Statistics extends React.PureComponent {
   }
 
   render() {
-    const { isLoading, ...rest } = this.state;
+    const {
+      averageUsersBySchools,
+      isLoading,
+      numberOfEvaluatedSchools,
+      numberOfEvaluations,
+      numberOfUsers,
+      percentageSchools,
+    } = this.state;
 
     if (isLoading) {
       return (
@@ -54,7 +62,25 @@ class Statistics extends React.PureComponent {
     }
 
     return (
-      <pre>{JSON.stringify(rest, null, 2)}</pre>
+      <div style={{ padding: 20 }}>
+        <Card
+          title="Média de alunos por escola"
+          subtitle={averageUsersBySchools}
+        />
+        <Card
+          title="Avaliações realizadas"
+          subtitle={numberOfEvaluations}
+        />
+        <Card
+          title="Usuários cadastrados"
+          subtitle={numberOfUsers}
+        />
+        <Card
+          title="Escolas que foram avaliadas ao menos uma vez"
+          subtitle={percentageSchools}
+          extra={numberOfEvaluatedSchools}
+        />
+      </div>
     )
   }
 }
