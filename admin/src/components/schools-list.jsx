@@ -93,7 +93,7 @@ class SchoolsList extends React.Component {
             message={errorMessage}
           />
         </Snackbar>
-        <AppBar>
+        <AppBar position="static">
           <Toolbar>
             <Typography variant="title" color="inherit" style={{ flex: 1 }}>
               Lista de escolas
@@ -111,7 +111,7 @@ class SchoolsList extends React.Component {
             />
           </Toolbar>
         </AppBar>
-        <List style={{ marginTop: 65 }}>
+        <List>
           {filteredSchools.length > 0 ?
             filteredSchools.map((s, idx) => (
               <React.Fragment key={s._id}>
