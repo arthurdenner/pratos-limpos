@@ -9,7 +9,11 @@ class Statistics extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.fetchStatistics();
+    this.interval = setInterval(this.fetchStatistics, 10000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   fetchStatistics = async () => {
